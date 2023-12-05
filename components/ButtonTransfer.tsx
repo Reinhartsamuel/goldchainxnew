@@ -5,7 +5,7 @@ import { login } from '@/services/sequence';
 import { Button, FormControl, Input, Text, useToast } from '@chakra-ui/react'
 import { serverTimestamp } from 'firebase/firestore';
 import Error from 'next/error';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 
 interface DataProps {
