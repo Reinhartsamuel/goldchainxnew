@@ -33,7 +33,7 @@ const ButtonTransfer = ({ data }: { data: DataProps }) => {
         const sender_address = parsedWallet.accountAddress;
 
         if (!sender_address) {
-            login();
+            login(toast);
             return toast({
                 title: "Login sequence wallet terlebih dahulu!",
                 isClosable: true,
