@@ -13,6 +13,8 @@ import {
     useDisclosure,
     Stack,
     Heading,
+    Avatar,
+    useToast,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
 import { ReactElement, useEffect, useState } from 'react'
@@ -46,15 +48,30 @@ const NavLink = (props: Props) => {
 }
 
 export default function Navbar(): ReactElement {
-    const wallet = sequence.getWallet();
+    const wallet =sequence.initWallet();
     const router = useRouter();
+    sequence.initWallet();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [isConnected, setIsConnected] = useState<boolean>(wallet.isConnected());
-
+    const [address, setAddress] = useState("")
+    const toast = useToast();
 
     useEffect(() => {
         setIsConnected(wallet.isConnected());
+        const getAddress = async () => {
+            try {
+                const x = await wallet.getAddress();
+                setAddress(x);
+            } catch (error) {
+                console.log(error, "error getting address");
+            };
+        };
+
+
+
+        getAddress();
+
     }, [wallet.isConnected()])
 
     return (
@@ -94,7 +111,7 @@ export default function Navbar(): ReactElement {
                                 variant={'link'}
                                 cursor={'pointer'}
                                 minW={0}>
-                                <Heading size="md">{isConnected && trimAddress(wallet.getAddress())}</Heading>
+                                <Heading size="md">{isConnected && trimAddress(address)}</Heading>
                                 {/* <Avatar
                                     size={'sm'}
                                     src={
@@ -109,7 +126,7 @@ export default function Navbar(): ReactElement {
                                 <MenuItem bg='black' onClick={() => wallet.openWallet()}>
                                     Open Wallet
                                 </MenuItem>
-                                <MenuItem bg='black' onClick={logout}>
+                                <MenuItem bg='black' onClick={() => logout(toast, router)}>
                                     Disconnect Wallet
                                 </MenuItem>
                                 {/* <MenuDivider /> */}

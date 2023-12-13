@@ -1,13 +1,18 @@
 import { sequence } from "0xsequence";
 import { UseToastOptions } from "@chakra-ui/react";
 import Moralis from "moralis";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Error from "next/error";
 
-// This assumes your dapp runs on Ethereum mainnet
-const wallet = sequence.getWallet();
+export const wallet = sequence.initWallet({
+    defaultNetwork: 'mainnet',
+    projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
+});
 
 // If your dapp runs on a different EVM-compatible blockchain, you can specify its name
 export const connectToSequence = async () => {
+    // const wallet = sequence.getWallet();
+
     try {
         const connectDetails = await wallet.connect({
             app: "GoldChainX",
@@ -50,7 +55,8 @@ export const startMoralis = async () => {
 };
 
 
-export const login = async (toast: UseToastOptions | any) => {
+export const login = async (toast: UseToastOptions | any, router: AppRouterInstance) => {
+    const wallet = sequence.getWallet();
     try {
         const result = await wallet.connect({
             app: "GoldChainX",
@@ -65,7 +71,9 @@ export const login = async (toast: UseToastOptions | any) => {
             },
         });
 
+
         if (result.connected) {
+            router.refresh();
             toast({
                 title: "Wallet connected!!",
                 description: `Connected to wallet ${result.session?.accountAddress}`,
@@ -83,8 +91,8 @@ export const login = async (toast: UseToastOptions | any) => {
             });
         }
 
-
         console.log("result::", result);
+        return result;
     } catch (error: Error | any) {
         console.log(error, "error login");
         toast({
@@ -94,24 +102,36 @@ export const login = async (toast: UseToastOptions | any) => {
             isClosable: true,
             duration: 9000
         });
+        throw new Error(error);
     }
-
 };
 
 
-export const logout = async () => {
+export const logout = async (toast: UseToastOptions | any, router: AppRouterInstance) => {
+    const wallet = sequence.getWallet();
     try {
-        wallet.disconnect().then(res => {
-            console.log(res, "res logout")
-        })
+        wallet.disconnect()
+        router.refresh();
+        toast({
+            title: "Wallet disconnected successfully",
+            status: 'warning',
+            isClosable: true,
+            duration: 5000
+        });
     } catch (error: Error | any) {
         console.log("error logging out:", error.message)
+        toast({
+            title: "Wallet connected!!",
+            description: error.message,
+            status: 'success',
+            isClosable: true,
+            duration: 5000
+        });
     }
 }
 
 
 export const openWallet = () => {
+    const wallet = sequence.getWallet();
     wallet.openWallet();
 };
-
-

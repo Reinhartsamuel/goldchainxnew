@@ -14,18 +14,7 @@ const HomeButtons = () => {
     const router = useRouter();
     const toast = useToast();
     const wallet = sequence.getWallet();
-
-
     const [isConnected, setIsConnected] = useState<boolean>(wallet.isConnected());
-
-
-
-    useEffect(() => {
-        wallet.isConnected() ? setIsConnected(true) : setIsConnected(false);
-    }, [wallet.isConnected()]);
-
-
-
 
     return (
         <Stack spacing={{ base: 3, sm: 4 }} direction={{ base: 'column', sm: 'row' }}>
@@ -39,8 +28,8 @@ const HomeButtons = () => {
                 _hover={{ bg: 'blue.600' }}
                 onClick={() => {
                     if (wallet.isConnected()) {
-                        logout();
-                    } else login(toast);
+                        logout(toast, router);
+                    } else login(toast, router);
                 }}
             >
                 {wallet.isConnected() ? "Disconnect Wallet" : "Login Wallet"}

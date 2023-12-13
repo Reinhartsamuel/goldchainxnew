@@ -5,6 +5,7 @@ import { login } from '@/services/sequence';
 import { Button, FormControl, Input, Text, useToast } from '@chakra-ui/react'
 import { serverTimestamp } from 'firebase/firestore';
 import Error from 'next/error';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
 
@@ -26,6 +27,7 @@ const ButtonTransfer = ({ data }: { data: DataProps }) => {
     const toast = useToast();
     const [receiver, setReceiver] = useState("");
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const submitRequest = async () => {
         const wallet: string | undefined | any = localStorage.getItem('@sequence.session');
@@ -33,7 +35,7 @@ const ButtonTransfer = ({ data }: { data: DataProps }) => {
         const sender_address = parsedWallet.accountAddress;
 
         if (!sender_address) {
-            login(toast);
+            login(toast, router);
             return toast({
                 title: "Login sequence wallet terlebih dahulu!",
                 isClosable: true,

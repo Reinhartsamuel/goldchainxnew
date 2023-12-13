@@ -13,14 +13,12 @@ export function Providers({ children }: { children: ReactNode }) {
 	};
 	const theme = extendTheme({ config });
 
-
-
-	useEffect(()=> {
-		sequence.initWallet({
-			defaultNetwork: 'mainnet',
-			projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
-		});
-	},[])
+	// useEffect(()=> {
+	// 	sequence.initWallet({
+	// 		defaultNetwork: 'mainnet',
+	// 		projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
+	// 	});
+	// },[])
 
 	return (
 		<CacheProvider>

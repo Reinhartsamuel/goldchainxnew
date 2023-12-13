@@ -16,7 +16,7 @@ import {
     Center,
     Spinner,
 } from '@chakra-ui/react'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { DispatchWithoutAction, SetStateAction, useCallback, useEffect, useState } from 'react'
 import axios from 'axios';
 import Moralis from "moralis";
 import { EvmChain } from "@moralisweb3/common-evm-utils";
@@ -78,7 +78,7 @@ interface Moralis {
 // };
 
 
-export default function ContractDetailComponent() {
+export default function ContractDetailComponent({ setResultMoralis }: { setResultMoralis: any }) {
     const [address, setAddress] = useState("");
     const [result, setResult] = useState<any>();
     const [isLoading, setIsLoading] = useState(false);
@@ -88,9 +88,8 @@ export default function ContractDetailComponent() {
     const [connection, setConnection] = useState("testnet");
     const [isScanning, setIsScanning] = useState(false);
     // const [resultMoralis, setResultMoralis] = useState<ResultDataMoralis | null>(null);
-    const [resultMoralis, setResultMoralis] = useState<any>(null);
     const [firebaseData, setFirebaseData] = useState<DocumentData | null | undefined>();
-    const [id, setId] = useState("");
+    const [id, setId] = useState<string>("");
 
 
     const toast = useToast();
@@ -210,28 +209,23 @@ export default function ContractDetailComponent() {
     };
 
 
-
-    const handleResult = useCallback(async (result: any) => {
+    const read = async () => {
+        window.alert(id)
         let firebaseDoc: DocumentData | null | undefined;
-        if (result?.text !== undefined) {
+        if (id !== undefined) {
             // setId(result.text);
-            console.log("id:::", result.text);
             setLoadingFirebase(true);
             setIsScanning(false);
 
-
-
             try {
-                firebaseDoc = await getSingleDocumentFirebase('products', result.text);
+                firebaseDoc = await getSingleDocumentFirebase('products', id);
                 console.log("result get details", firebaseDoc);
                 setFirebaseData(firebaseDoc);
                 // return await runMoralis(result || undefined);
             } catch (error: Error | any) {
                 console.log(error.message, "error getting details from database");
-                setLoadingFirebase(true);
+                setLoadingFirebase(false);
             };
-
-
 
             setLoadingMoralis(true);
             setLoadingFirebase(false);
@@ -244,7 +238,8 @@ export default function ContractDetailComponent() {
                     // ...and any other configuration
                 });
             } catch (error: Error | any) {
-                console.log(error.message, "error starting moralis")
+                console.log(error.message, "error starting moralis");
+                return;
             };
 
 
@@ -266,6 +261,14 @@ export default function ContractDetailComponent() {
                 setResultMoralis(data);
                 // return setLoadingMoralis(false);
             } catch (error: Error | any) {
+                setLoadingMoralis(false);
+                toast({
+                    title: 'error',
+                    description: error.message,
+                    status: 'error',
+                    isClosable: true,
+                    duration: 9000
+                })
                 console.log(error.message, "error reading from moralis")
             } finally {
                 setLoadingMoralis(false);
@@ -274,17 +277,24 @@ export default function ContractDetailComponent() {
 
             // await getDetails(result?.text);
         }
+    }
+
+
+
+    const handleResult = useCallback(async (result: any) => {
+        if (typeof result.text === "string" && result?.text?.length > 0) {
+            setId(result.text);
+        };
+        return console.log(result.text, "this the id from qr")
     }, []);
 
 
-    // useEffect(() => {
-    //     runMoralis(undefined);
-    // }, [firebaseData]);
-
-    // useEffect(() => {
-    //     getDetails(id);
-    // }, [id]);
-
+    useEffect(() => {
+        if (id.length > 1) read();
+        return () => {
+            setId("");
+        };
+    }, [id])
 
     return (
         <Container>
@@ -292,6 +302,7 @@ export default function ContractDetailComponent() {
                 <QrReader
                     onResult={handleResult}
                     // style={{ width: '500px' }}
+                    scanDelay={1000}
                     constraints={{
                         facingMode: 'environment'
                     }}
@@ -341,7 +352,7 @@ export default function ContractDetailComponent() {
                     }>
 
 
-                    {resultMoralis ? Object.keys(resultMoralis).length > 1 && Object.keys(resultMoralis)?.map((key, index) => (
+                    {/* {resultMoralis ? Object.keys(resultMoralis).length > 1 && Object.keys(resultMoralis)?.map((key, index) => (
                         <Box key={index}>
                             <Text
                                 fontSize={{ base: '16px', lg: '18px' }}
@@ -360,7 +371,7 @@ export default function ContractDetailComponent() {
                             </Text>
 
                         </Box>
-                    )) : <></>}
+                    )) : <></>} */}
 
                 </Stack>
 
@@ -403,7 +414,7 @@ export default function ContractDetailComponent() {
                 }>
 
 
-                {resultMoralis && Object.keys(resultMoralis).length > 1 &&
+                {/* {resultMoralis && Object.keys(resultMoralis).length > 1 &&
 
                     // <Text>Asli cuy</Text>
                     Object.keys(resultMoralis)?.map((arg, index) => (
@@ -426,7 +437,7 @@ export default function ContractDetailComponent() {
                         </Box>
                     ))
 
-                }
+                } */}
 
             </Stack>
 
