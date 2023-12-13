@@ -51,7 +51,7 @@ export default function ContractDetails() {
                                     Scan qr di bawah untuk memulai:
                                 </Heading>
                             </Center>
-                            <ContractDetailComponent />
+                            {/* <ContractDetailComponent /> */}
                         </Box>
 
 
