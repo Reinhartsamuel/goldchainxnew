@@ -17,11 +17,6 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
 
-  const wallet = sequence.initWallet({
-    defaultNetwork: 'mainnet',
-    projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
-  });
-  
   return (
     <html lang="en">
       <Providers>

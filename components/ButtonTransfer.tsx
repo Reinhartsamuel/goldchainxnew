@@ -22,7 +22,7 @@ interface WalletObject {
 };
 
 const ButtonTransfer = ({ data }: { data: DataProps }) => {
-    const wallet = sequence.initWallet();
+    const wallet = sequence.getWallet();
     const toast = useToast();
     const [receiver, setReceiver] = useState("");
     const [loading, setLoading] = useState(false);

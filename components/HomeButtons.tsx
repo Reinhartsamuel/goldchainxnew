@@ -21,15 +21,6 @@ const HomeButtons = () => {
 
 
     useEffect(() => {
-        sequence.initWallet({
-            defaultNetwork: 'mainnet',
-            projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
-        });
-    }, []);
-
-
-
-    useEffect(() => {
         wallet.isConnected() ? setIsConnected(true) : setIsConnected(false);
     }, [wallet.isConnected()]);
 

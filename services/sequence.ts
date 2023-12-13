@@ -4,13 +4,9 @@ import Moralis from "moralis";
 import Error from "next/error";
 
 // This assumes your dapp runs on Ethereum mainnet
-const wallet = sequence.initWallet({
-    defaultNetwork: 'mainnet',
-    projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
-});
+const wallet = sequence.getWallet();
 
 // If your dapp runs on a different EVM-compatible blockchain, you can specify its name
-// const wallet = sequence.initWallet({ defaultNetwork: 'polygon' });
 export const connectToSequence = async () => {
     try {
         const connectDetails = await wallet.connect({
@@ -86,7 +82,7 @@ export const login = async (toast: UseToastOptions | any) => {
                 duration: 5000
             });
         }
-        
+
 
         console.log("result::", result);
     } catch (error: Error | any) {
@@ -105,7 +101,9 @@ export const login = async (toast: UseToastOptions | any) => {
 
 export const logout = async () => {
     try {
-        wallet.disconnect();
+        wallet.disconnect().then(res => {
+            console.log(res, "res logout")
+        })
     } catch (error: Error | any) {
         console.log("error logging out:", error.message)
     }

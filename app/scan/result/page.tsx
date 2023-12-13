@@ -28,12 +28,6 @@ import { LuWallet } from 'react-icons/lu'
 
 
 export default async function page() {
-    sequence.initWallet({
-        defaultNetwork: 'mainnet',
-        projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
-    });
-
-
     const wallet = sequence.getWallet();
 
     const details = connectToSequence();

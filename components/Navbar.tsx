@@ -3,16 +3,13 @@
 import {
     Box,
     Flex,
-    Avatar,
     HStack,
-    Text,
     IconButton,
     Button,
     Menu,
     MenuButton,
     MenuList,
     MenuItem,
-    MenuDivider,
     useDisclosure,
     Stack,
     Heading,
@@ -54,16 +51,6 @@ export default function Navbar(): ReactElement {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [isConnected, setIsConnected] = useState<boolean>(wallet.isConnected());
-
-
-
-    useEffect(() => {
-        sequence.initWallet({
-            defaultNetwork: 'mainnet',
-            projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
-        });
-    }, []);
-
 
 
     useEffect(() => {
