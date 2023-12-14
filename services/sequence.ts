@@ -21,7 +21,7 @@ export const connectToSequence = async () => {
             // And pass settings if you would like to customize further
             settings: {
                 theme: "dark",
-                bannerUrl: "https://firebasestorage.googleapis.com/v0/b/saudagar-92dc2.appspot.com/o/image-assets%2Fgoldchainx.png?alt=media&token=18ca2594-1b72-4df6-8c69-032bb3d9d86e", // 3:1 aspect ratio, 1200x400 works best
+                bannerUrl: "https://firebasestorage.googleapis.com/v0/b/saudagar-92dc2.appspot.com/o/Asset%206.png?alt=media&token=9d19d346-9ff0-4b06-b7c5-270b208e00c2", // 3:1 aspect ratio, 1200x400 works best
                 includedPaymentProviders: ["moonpay", "ramp"],
                 defaultFundingCurrency: "matic",
                 lockFundingCurrencyToDefault: false,
