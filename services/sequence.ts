@@ -64,7 +64,7 @@ export const login = async (toast: UseToastOptions | any, router: AppRouterInsta
             settings: {
                 // signInOptions: ["google"] ,
                 theme: "dark",
-                bannerUrl: "https://firebasestorage.googleapis.com/v0/b/saudagar-92dc2.appspot.com/o/image-assets%2Fgold.jpeg?alt=media&token=4cfb30d3-519e-4677-adf7-de1937acb015", // 3:1 aspect ratio, 1200x400 works best
+                bannerUrl: "https://firebasestorage.googleapis.com/v0/b/saudagar-92dc2.appspot.com/o/Untitled%20Project.jpg?alt=media&token=90d8c7e2-cc5e-421d-8986-86fa380a8740", // 3:1 aspect ratio, 1200x400 works best
                 includedPaymentProviders: ["moonpay", "ramp"],
                 defaultFundingCurrency: "matic",
                 lockFundingCurrencyToDefault: false,
