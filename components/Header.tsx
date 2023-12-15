@@ -1,15 +1,21 @@
+'use client'
 import { Box, Flex, HStack } from '@chakra-ui/react';
 import React from 'react';
 import { IoIosArrowBack } from "react-icons/io";
 import { CiLocationArrow1 } from "react-icons/ci";
 import { RiFlag2Line } from "react-icons/ri";
+import { useRouter } from 'next/navigation';
 
 const HeaderBar: React.FC = () => {
+    const router = useRouter();
+
     return (
         <Flex
-            zIndex={2}
+            zIndex={200}
             position={'absolute'}
-            w={'2xl'}
+            minW={'xs'}
+            w={'100%'}
+            maxW={'2xl'}
             flexDir={'row'}
             justifyContent={'space-between'}
             p={10}
@@ -17,6 +23,7 @@ const HeaderBar: React.FC = () => {
             top={0}
         >
             <Box
+                onClick={() => router.back()}
                 _active={{
                     bg: 'red'
                 }}

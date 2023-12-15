@@ -45,40 +45,13 @@ interface Moralis {
     abi: string;
 };
 
-// interface ResultDataMoralis {
-//     amount: string;
-//     block_number: string;
-//     block_number_minted: string;
-//     contract_type: string;
-//     last_metadata_sync: string;
-//     last_token_uri_sync: string;
-//     token_uri?: string;
-//     metadata?: string;
-//     minter_address?: string;
-//     name: string;
-//     owner_of: string;
-//     possible_spam: boolean;
-//     symbol: string;
-//     token_address: string;
-//     token_hash: string;
-//     token_id: string;
-//     verified_collection: boolean;
-// }
-
-// interface DataFirebaseProduct {
-//     contract_address: string;
-//     createdAt: Timestamp;
-//     id: string;
-//     image_path: string;
-//     manufacturer: string;
-//     owner_email: string;
-//     owner_id: string;
-//     token_id: string;
-//     weight: number;
-// };
+interface ChildComponentProps {
+    setResultMoralis: any;
+    setFirebaseData: React.Dispatch<React.SetStateAction<DocumentData | null | undefined>>;
+}
 
 
-export default function ContractDetailComponent({ setResultMoralis }: { setResultMoralis: any }) {
+const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoralis, setFirebaseData }) => {
     const [address, setAddress] = useState("");
     const [result, setResult] = useState<any>();
     const [isLoading, setIsLoading] = useState(false);
@@ -88,7 +61,7 @@ export default function ContractDetailComponent({ setResultMoralis }: { setResul
     const [connection, setConnection] = useState("testnet");
     const [isScanning, setIsScanning] = useState(false);
     // const [resultMoralis, setResultMoralis] = useState<ResultDataMoralis | null>(null);
-    const [firebaseData, setFirebaseData] = useState<DocumentData | null | undefined>();
+    // const [firebaseData, setFirebaseData] = useState<DocumentData | null | undefined>();
     const [id, setId] = useState<string>("");
 
 
@@ -196,21 +169,7 @@ export default function ContractDetailComponent({ setResultMoralis }: { setResul
         };
     };
 
-    const getDetails = async (id: string) => {
-        try {
-            const result = await getSingleDocumentFirebase('products', id);
-            console.log("result get details", result);
-            setFirebaseData(result);
-            // return await runMoralis(result || undefined);
-        } catch (error: Error | any) {
-            console.log(error.message, "error getting details from database");
-            setLoadingFirebase(true);
-        };
-    };
-
-
     const read = async () => {
-        window.alert(id)
         let firebaseDoc: DocumentData | null | undefined;
         if (id !== undefined) {
             // setId(result.text);
@@ -445,3 +404,6 @@ export default function ContractDetailComponent({ setResultMoralis }: { setResul
         </Container>
     )
 }
+
+
+export default ContractDetailComponent

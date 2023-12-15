@@ -40,7 +40,7 @@ const HomeButtons = () => {
                 size={'md'}
                 fontWeight={'normal'}
                 px={6}
-                onClick={() => router.push('scan')}
+                onClick={() => router.push('scan-now')}
             >
                 SCAN QR CODE SEKARANG
             </Button>
