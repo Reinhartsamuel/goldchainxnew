@@ -22,6 +22,7 @@ import { sequence } from '0xsequence'
 import { useRouter } from 'next/navigation'
 import { trimAddress } from '@/services/utils'
 import { logout } from '@/services/sequence'
+import { useWalletStore } from '@/app/context/wallet'
 
 interface Props {
     children: string
@@ -48,7 +49,7 @@ const NavLink = (props: Props) => {
 }
 
 export default function Navbar(): ReactElement {
-    const wallet =sequence.initWallet();
+    const wallet = sequence.initWallet();
     const router = useRouter();
     sequence.initWallet();
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -56,6 +57,7 @@ export default function Navbar(): ReactElement {
     const [isConnected, setIsConnected] = useState<boolean>(wallet.isConnected());
     const [address, setAddress] = useState("")
     const toast = useToast();
+    const { accountAddress, resetAccountAddress } = useWalletStore();
 
     useEffect(() => {
         setIsConnected(wallet.isConnected());
@@ -74,6 +76,7 @@ export default function Navbar(): ReactElement {
 
     }, [wallet.isConnected()])
 
+
     return (
         <>
             <Box bg='gray.800' px={4}>
@@ -88,7 +91,9 @@ export default function Navbar(): ReactElement {
                         onClick={isOpen ? onClose : onOpen}
                     />
                     <HStack h={16} spacing={8} alignItems={'center'}>
-                        <Heading color='gray.100'>GCX</Heading>
+                        <Heading color='gray.100'
+                            onClick={() => console.log(accountAddress)}
+                        >GCX</Heading>
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                             {Links.map((link) => (
                                 <NavLink key={link}>{link}</NavLink>
@@ -126,7 +131,7 @@ export default function Navbar(): ReactElement {
                                 <MenuItem bg='black' onClick={() => wallet.openWallet()}>
                                     Open Wallet
                                 </MenuItem>
-                                <MenuItem bg='black' onClick={() => logout(toast, router)}>
+                                <MenuItem bg='black' onClick={() => logout(toast, router, resetAccountAddress)}>
                                     Disconnect Wallet
                                 </MenuItem>
                                 {/* <MenuDivider /> */}

@@ -21,22 +21,50 @@ import {
 } from '@chakra-ui/react'
 import HeaderBar from './Header'
 import ContractDetailComponent from './ContractDetailComponent'
-import { DocumentData } from 'firebase/firestore'
+import { DocumentData, serverTimestamp } from 'firebase/firestore'
+import { sequence } from '0xsequence'
+import { useWalletStore } from '@/app/context/wallet'
+import { useWallet } from '@/app/context/walletContext'
+import { addDocumentFirebase } from '@/apis/firebaseApi'
 
 const ResultScan = () => {
     const [showResult, setShowResult] = useState<boolean>(false);
     const [resultMoralis, setResultMoralis] = useState<any>(null);
     const [firebaseData, setFirebaseData] = useState<DocumentData | null | undefined>();
+    const { accountAddress } = useWalletStore(); // zustand
+    const { walletAddress } = useWallet(); // react context
+    const [isLoading, setIsLoading] = useState(false);
+    const [receiver, setReceiver] = useState(""); walletAddress
 
+
+
+    const submitRequestTransfer = async () => {
+        setIsLoading(true);
+        const submitData = {
+            from: walletAddress,
+            to: receiver,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+            status: "REQUESTED"
+        };
+        try {
+            await addDocumentFirebase('request_transfers', submitData);
+            window.alert("Request success!");
+        } catch (error: Error | any) {
+            console.log(error.message, "error submitting transfer request");
+        } finally {
+            setIsLoading(false);
+        };
+    };
 
 
     return (
         <>
             {(!showResult && resultMoralis === null) ?
                 <Center h="100vh">
-                    <ContractDetailComponent 
-                    setFirebaseData={setFirebaseData}
-                    setResultMoralis={setResultMoralis} 
+                    <ContractDetailComponent
+                        setFirebaseData={setFirebaseData}
+                        setResultMoralis={setResultMoralis}
                     />
                 </Center>
                 :
@@ -56,7 +84,7 @@ const ResultScan = () => {
                             overflow={'hidden'}
                         >
                             <Image
-                                src={'https://cdn.dribbble.com/userupload/4487675/file/still-2ef9e84caa94f5f5510171e03f5318b2.png?resize=800x600&vertical=center'}
+                                src={firebaseData ? firebaseData.image_path : 'https://cdn.dribbble.com/userupload/4487675/file/still-2ef9e84caa94f5f5510171e03f5318b2.png?resize=800x600&vertical=center'}
                             />
                             {resultMoralis.token_address &&
                                 <Box
@@ -75,7 +103,10 @@ const ResultScan = () => {
                         </Box>
                     </Box>
                     <Text><strong>MORALIS:::</strong>{JSON.stringify(resultMoralis)}</Text>
-                    <Text><strong>FIREBASE:::</strong>{JSON.stringify(firebaseData)}</Text>
+                    <Text>FIREBASE:::{JSON.stringify(firebaseData)}</Text>
+                    <Text>My wallet from zustand:{accountAddress}</Text>
+                    <Text>My wallet from context:{walletAddress}</Text>
+                    <Text>Is this token owned by me ? <strong>{accountAddress === resultMoralis.owner_of ? "TRUE ANJENG" : "FALSEEEE"}</strong></Text>
 
                     <Accordion
                         mx={{
@@ -107,7 +138,7 @@ const ResultScan = () => {
                                 <Text>1 gram</Text>
                                 <Divider mt={10} />
                                 <Text fontWeight='bold'>Token Owner</Text>
-                                <Text>1x12lnk1j1og31hd13s (you)</Text>
+                                <Text>{resultMoralis.owner_of}{accountAddress === resultMoralis.owner_of ? "(You)" : ""} </Text>
                                 <Divider mt={10} />
                             </AccordionPanel>
                         </AccordionItem>
@@ -153,6 +184,7 @@ const ResultScan = () => {
 
                                 >
                                     <Input
+                                        onChange={e => setReceiver(e.target.value)}
                                         textAlign={'center'}
                                         _placeholder={{
                                             textAlign: 'center',
@@ -171,7 +203,7 @@ const ResultScan = () => {
                                     <Button
                                         w='full'
                                         colorScheme='green'
-                                        onClick={() => { }}
+                                        onClick={submitRequestTransfer}
                                         height={20}
                                         isLoading={false}
                                         loadingText={'Submitting request...'}
@@ -183,6 +215,8 @@ const ResultScan = () => {
                                     <VStack>
                                         <Text my={5} fontWeight={'bold'}>Perhatian!</Text>
                                         <Text textAlign={'center'}>Dengan transfer kepemilikan token maka kepemilikan akan berpindah dan anda bukan lagi pemilik serta kehilangan hak untuk memindahkan kepemilikan serta benefit lainnya</Text>
+
+                                        <Text>{walletAddress}</Text>
                                     </VStack>
                                 </Box>
                             </AccordionPanel>

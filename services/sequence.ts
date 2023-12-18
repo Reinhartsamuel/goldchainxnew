@@ -21,7 +21,7 @@ export const connectToSequence = async () => {
             // And pass settings if you would like to customize further
             settings: {
                 theme: "dark",
-                bannerUrl: "https://firebasestorage.googleapis.com/v0/b/saudagar-92dc2.appspot.com/o/Asset%206.png?alt=media&token=9d19d346-9ff0-4b06-b7c5-270b208e00c2", // 3:1 aspect ratio, 1200x400 works best
+                bannerUrl: "https://firebasestorage.googleapis.com/v0/b/saudagar-92dc2.appspot.com/o/image-assets%2FfontAsset%2019.svg?alt=media&token=2a2d3968-082e-4b58-a686-28290c9452fd", // 3:1 aspect ratio, 1200x400 works best
                 includedPaymentProviders: ["moonpay", "ramp"],
                 defaultFundingCurrency: "matic",
                 lockFundingCurrencyToDefault: false,
@@ -55,7 +55,12 @@ export const startMoralis = async () => {
 };
 
 
-export const login = async (toast: UseToastOptions | any, router: AppRouterInstance) => {
+export const login = async (
+    toast: UseToastOptions | any,
+    router: AppRouterInstance,
+    setAccountAddress: (payload: string | undefined) => void,
+    setWalletAddress: (payload: string | undefined) => void,
+) => {
     const wallet = sequence.getWallet();
     try {
         const result = await wallet.connect({
@@ -73,7 +78,6 @@ export const login = async (toast: UseToastOptions | any, router: AppRouterInsta
 
 
         if (result.connected) {
-            router.refresh();
             toast({
                 title: "Wallet connected!!",
                 description: `Connected to wallet ${result.session?.accountAddress}`,
@@ -81,11 +85,14 @@ export const login = async (toast: UseToastOptions | any, router: AppRouterInsta
                 isClosable: true,
                 duration: 5000
             });
+            setAccountAddress(result.session?.accountAddress); // zustand
+            setWalletAddress(result.session?.accountAddress); //context
+            router.refresh();
         } else {
             toast({
                 title: "Wallet disconnected!!",
-                description: `Wallet successfully disconnected on ${new Date().toString()}`,
-                status: 'success',
+                description: `Wallet not connected, Time: ${new Date().toString()}`,
+                status: 'error',
                 isClosable: true,
                 duration: 5000
             });
@@ -107,10 +114,15 @@ export const login = async (toast: UseToastOptions | any, router: AppRouterInsta
 };
 
 
-export const logout = async (toast: UseToastOptions | any, router: AppRouterInstance) => {
+export const logout = async (
+    toast: UseToastOptions | any,
+    router: AppRouterInstance,
+    resetAccountAddress: () => void
+) => {
     const wallet = sequence.getWallet();
     try {
-        wallet.disconnect()
+        wallet.disconnect();
+        resetAccountAddress();
         router.refresh();
         toast({
             title: "Wallet disconnected successfully",

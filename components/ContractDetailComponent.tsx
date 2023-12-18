@@ -191,15 +191,15 @@ const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoral
             const address = firebaseDoc?.contract_address;
             const chain = EvmChain.POLYGON;
 
-            try {
-                await Moralis.start({
-                    apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6ImFkN2ZhYTRhLTNlZWYtNGY4MC1iNDUwLTUyZDQwMTgxYmY1ZiIsIm9yZ0lkIjoiMzY1ODUzIiwidXNlcklkIjoiMzc2MDAxIiwidHlwZUlkIjoiYmFjYzhjMTYtOTJhNi00ZTE4LWE2ZjAtZjZkNzRhY2VlMDg3IiwidHlwZSI6IlBST0pFQ1QiLCJpYXQiOjE3MDEwMDEwNTIsImV4cCI6NDg1Njc2MTA1Mn0.KZa9YIqf2n4WX4gkMa3Z-RA4yfJ3uwWaeXuKHaWaydM"
-                    // ...and any other configuration
-                });
-            } catch (error: Error | any) {
-                console.log(error.message, "error starting moralis");
-                return;
-            };
+            // try {
+            //     await Moralis.start({
+            //         apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6ImFkN2ZhYTRhLTNlZWYtNGY4MC1iNDUwLTUyZDQwMTgxYmY1ZiIsIm9yZ0lkIjoiMzY1ODUzIiwidXNlcklkIjoiMzc2MDAxIiwidHlwZUlkIjoiYmFjYzhjMTYtOTJhNi00ZTE4LWE2ZjAtZjZkNzRhY2VlMDg3IiwidHlwZSI6IlBST0pFQ1QiLCJpYXQiOjE3MDEwMDEwNTIsImV4cCI6NDg1Njc2MTA1Mn0.KZa9YIqf2n4WX4gkMa3Z-RA4yfJ3uwWaeXuKHaWaydM"
+            //         // ...and any other configuration
+            //     });
+            // } catch (error: Error | any) {
+            //     console.log(error.message, "error starting moralis");
+            //     return;
+            // };
 
 
             const tokenId = firebaseDoc?.token_id;
