@@ -58,8 +58,8 @@ export const startMoralis = async () => {
 export const login = async (
     toast: UseToastOptions | any,
     router: AppRouterInstance,
-    setAccountAddress: (payload: string | undefined) => void,
-    setWalletAddress: (payload: string | undefined) => void,
+    setAccountAddress: (payload: string | undefined) => void, // zustand
+    setWalletAddress: (payload: string | undefined) => void, // context
 ) => {
     const wallet = sequence.getWallet();
     try {

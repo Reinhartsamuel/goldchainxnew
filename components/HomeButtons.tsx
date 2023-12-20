@@ -16,7 +16,11 @@ import { useWallet } from '@/app/context/walletContext';
 const HomeButtons = () => {
     // const { open } = useWeb3Modal();
     const router = useRouter();
-    const toast = useToast();
+    const toast = useToast({
+        containerStyle: {
+            maxWidth: '95%',
+          },
+    });
     const wallet = sequence.getWallet();
     const [isConnected, setIsConnected] = useState<boolean>(wallet.isConnected());
     const { setAccountAddress, resetAccountAddress }: WalletState = useWalletStore();

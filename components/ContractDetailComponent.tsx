@@ -178,7 +178,6 @@ const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoral
 
             try {
                 firebaseDoc = await getSingleDocumentFirebase('products', id);
-                console.log("result get details", firebaseDoc);
                 setFirebaseData(firebaseDoc);
                 // return await runMoralis(result || undefined);
             } catch (error: Error | any) {
@@ -216,7 +215,6 @@ const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoral
                 const data = json?.result[0];
 
                 // setResultMoralis(json.result[0]);
-                console.log("data moralis", data);
                 setResultMoralis(data);
                 // return setLoadingMoralis(false);
             } catch (error: Error | any) {
@@ -244,7 +242,7 @@ const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoral
         if (typeof result.text === "string" && result?.text?.length > 0) {
             setId(result.text);
         };
-        return console.log(result.text, "this the id from qr")
+        // return console.log(result.text, "this the id from qr")
     }, []);
 
 

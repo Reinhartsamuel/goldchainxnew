@@ -1,6 +1,8 @@
 'use client'
 import { sequence } from '0xsequence';
 import { addDocumentFirebase } from '@/apis/firebaseApi';
+import { useWalletStore } from '@/app/context/wallet';
+import { useWallet } from '@/app/context/walletContext';
 import { login } from '@/services/sequence';
 import { Button, FormControl, Input, Text, useToast } from '@chakra-ui/react'
 import { serverTimestamp } from 'firebase/firestore';
@@ -28,21 +30,23 @@ const ButtonTransfer = ({ data }: { data: DataProps }) => {
     const [receiver, setReceiver] = useState("");
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    // const { setAccountAddress } = useWallet()
+    // const { setWalletAddress } = useWalletStore();
 
     const submitRequest = async () => {
         const wallet: string | undefined | any = localStorage.getItem('@sequence.session');
         const parsedWallet: WalletObject = JSON?.parse(wallet);
         const sender_address = parsedWallet.accountAddress;
-
-        if (!sender_address) {
-            login(toast, router);
-            return toast({
-                title: "Login sequence wallet terlebih dahulu!",
-                isClosable: true,
-                duration: 9000,
-                status: 'error'
-            })
-        }
+        return console.log(sender_address)
+        // if (!sender_address) {
+        //     login(toast, router, setAccountAddress, setWalletAddress);
+        //     return toast({
+        //         title: "Login sequence wallet terlebih dahulu!",
+        //         isClosable: true,
+        //         duration: 9000,
+        //         status: 'error'
+        //     })
+        // }
 
 
 

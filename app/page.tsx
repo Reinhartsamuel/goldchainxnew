@@ -1,5 +1,6 @@
 import HomeButtons from '@/components/HomeButtons'
 import Navbar from '@/components/Navbar'
+import TradingViewWidget from '@/components/TradingViewWidget'
 import {
 	Container,
 	Stack,
@@ -57,6 +58,7 @@ export default function Home() {
 
 						<HomeButtons />
 					</Stack>
+
 					<Flex
 						flex={1}
 						justify={'center'}
@@ -72,6 +74,7 @@ export default function Home() {
 							zIndex={-1}
 							color={'red.50'}
 						/>
+
 						<Box
 							position={'relative'}
 							height={'300px'}
@@ -105,6 +108,8 @@ export default function Home() {
 				</Stack>
 
 				<VStack my={70}>
+				<TradingViewWidget />
+
 					<Text my={10} color="white">Bekerjasama dengan:</Text>
 					<HStack gap={10}>
 

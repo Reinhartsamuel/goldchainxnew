@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Box,
     Text,
@@ -26,6 +26,7 @@ import { sequence } from '0xsequence'
 import { useWalletStore } from '@/app/context/wallet'
 import { useWallet } from '@/app/context/walletContext'
 import { addDocumentFirebase } from '@/apis/firebaseApi'
+import { ContractInterface, ethers } from 'ethers'
 
 const ResultScan = () => {
     const [showResult, setShowResult] = useState<boolean>(false);
@@ -34,7 +35,34 @@ const ResultScan = () => {
     const { accountAddress } = useWalletStore(); // zustand
     const { walletAddress } = useWallet(); // react context
     const [isLoading, setIsLoading] = useState(false);
-    const [receiver, setReceiver] = useState(""); walletAddress
+    const [receiver, setReceiver] = useState("");
+    const [abi, setAbi] = useState<ContractInterface>("");
+
+
+    const write = async () => {
+        const node = "wss://polygon-mumbai.infura.io/ws/v3/733a7efe57364ffd9210b582d7cd0cb3";
+        const provider = new ethers.providers.WebSocketProvider(node);
+
+        let privatekey = walletAddress !== undefined ? walletAddress : "fdfb72ce9754e3cbc1e79e44a8e20804cebd3c4a347605c6a3462a8de05b8784";
+        let wallet = new ethers.Wallet(privatekey, provider);
+
+        console.log("Using wallet address " + wallet.address);
+
+        let contractaddress = "0x50802059B3A299b36bc2c71aBEDBA450032f49AB";
+        let contract = new ethers.Contract(contractaddress, abi, wallet);
+
+        let read = await contract.retrieve();
+        console.log("Value stored in contract is " + read.toString());
+
+        // call the "store" function to update the value to 420
+        let write = await contract.setApprovalForAll(wallet, true);
+        write.wait(2)
+            .then(async () => {
+                // read the contract again, similar to above
+                let read = await contract.retrieve();
+                console.log("Updated value stored in contract is " + read.toString());
+            });
+    }
 
 
 
@@ -47,15 +75,39 @@ const ResultScan = () => {
             updatedAt: serverTimestamp(),
             status: "REQUESTED"
         };
+        if (!receiver) return window.alert("Alamat Wallet tujuan harus diisi.")
         try {
-            await addDocumentFirebase('request_transfers', submitData);
-            window.alert("Request success!");
+            const id = await addDocumentFirebase('request_transfers', submitData);
+            if (!id) {
+                window.alert("Request failed");
+            } else {
+                console.log(id, "id doc firebase")
+                window.alert("Request success!");
+            };
         } catch (error: Error | any) {
             console.log(error.message, "error submitting transfer request");
         } finally {
             setIsLoading(false);
         };
     };
+
+
+
+    useEffect(() => {
+        const getAbi = async () => {
+            try {
+                fetch(`/api/contract/abi?address=0x70bd9276e3f6f18e6bc306aaf306647d596e7f57`)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        console.log(data, "data from api");
+                        setAbi(data.data.result)
+                    })
+            } catch (error) {
+
+            }
+        }
+        getAbi();
+    }, [resultMoralis])
 
 
     return (
@@ -203,7 +255,8 @@ const ResultScan = () => {
                                     <Button
                                         w='full'
                                         colorScheme='green'
-                                        onClick={submitRequestTransfer}
+                                        // onClick={submitRequestTransfer}
+                                        onClick={write}
                                         height={20}
                                         isLoading={false}
                                         loadingText={'Submitting request...'}
