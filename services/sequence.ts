@@ -5,7 +5,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import Error from "next/error";
 
 export const wallet = sequence.initWallet({
-    defaultNetwork: 'mainnet',
+    defaultNetwork: 'polygon',
     projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
 });
 

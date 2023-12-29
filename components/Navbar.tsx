@@ -125,7 +125,7 @@ export default function Navbar(): ReactElement {
                                 /> */}
                             </MenuButton>
                             <MenuList bg='black'>
-                                <MenuItem bg='black' onClick={() => router.push('/home')}>
+                                <MenuItem bg='black' onClick={() => router.push('/profile')}>
                                     My Profile
                                 </MenuItem>
                                 <MenuItem bg='black' onClick={() => wallet.openWallet()}>

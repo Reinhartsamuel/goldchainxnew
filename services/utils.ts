@@ -1,4 +1,5 @@
-export const trimAddress = (address: string): string => {
-    const trimmed = `${address.slice(0, 5)}...${address.substring(address.length - 5)}`;
+export const trimAddress = (address: string | undefined): string => {
+    if (!address) return "";
+    const trimmed = `${address.slice(0, 5)}...${address.slice(- 5)}`;
     return trimmed;
 };

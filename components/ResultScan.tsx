@@ -30,6 +30,7 @@ import { ContractInterface, ethers } from 'ethers'
 
 import { POSClient } from "@maticnetwork/maticjs"
 import { AbiDecodingDataSizeTooSmallError } from 'viem'
+import { wallet } from '@/services/sequence'
 
 
 
@@ -74,13 +75,16 @@ const ResultScan = () => {
 
     const handleApproval = async () => {
         console.log('anjay')
-        let wallet: sequence.provider.SequenceProvider;
+        // let wallet: sequence.provider.SequenceProvider;
         let signer;
         try {
-            wallet = sequence.getWallet();
+            // wallet = sequence.getWallet();
             signer = wallet.getSigner();
         } catch (error: Error | any) {
-            wallet = sequence.initWallet();
+            // wallet = sequence.initWallet({
+            //     projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
+            //     defaultNetwork: 'polygon'
+            // });
             console.log(error.message, 'error getwallet and get signer')
         }
         // Replace with your Polygon RPC endpoint
@@ -138,7 +142,7 @@ const ResultScan = () => {
     useEffect(() => {
         const fetchAbi = async () => {
             try {
-                fetch(`/api/contract/abi?address=0x70bd9276e3f6f18e6bc306aaf306647d596e7f57`)
+                fetch(`/api/contract/abi?address=${resultMoralis?.token_address}`)
                     .then((res) => res.json())
                     .then((data) => {
                         console.log(data, "data from api");

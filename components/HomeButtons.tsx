@@ -33,17 +33,15 @@ const HomeButtons = () => {
                 size={'md'}
                 fontWeight={'normal'}
                 px={6}
-                colorScheme={'blue'}
-                bg={'blue.500'}
-                _hover={{ bg: 'blue.600' }}
+                colorScheme='blue'
                 onClick={() => {
                     if (wallet.isConnected()) {
-                        logout(toast, router, resetAccountAddress);
+                        // logout(toast, router, resetAccountAddress);
+                        router.push('/profile')
                     } else login(toast, router, setAccountAddress, setWalletAddress);
                 }}
             >
-                {wallet.isConnected() ? "Disconnect Wallet" : "Login Wallet"}
-
+                {wallet.isConnected() ? "Go to Profile " : "Login Wallet"} 
             </Button>
             <Button
                 rounded={'full'}
