@@ -239,8 +239,12 @@ const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoral
 
 
     const handleResult = useCallback(async (result: any) => {
-        if (typeof result.text === "string" && result?.text?.length > 0) {
-            setId(result.text);
+        if (typeof result?.text === "string" && result?.text?.length > 0) {
+            try {
+                setId(result?.text);
+            } catch (error: Error | any) {
+                console.log(error.message, 'error setting id from text')
+            }
         };
         // return console.log(result.text, "this the id from qr")
     }, []);

