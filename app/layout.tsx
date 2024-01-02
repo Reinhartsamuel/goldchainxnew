@@ -7,7 +7,7 @@ import { WalletProvider } from './context/walletContext'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'GCX',
+  title: 'GoldChainX',
   description: 'Emas terpercaya dan 100% otentik',
 }
 

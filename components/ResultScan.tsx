@@ -18,6 +18,7 @@ import {
     ListItem,
     Input,
     Button,
+    HStack,
 } from '@chakra-ui/react'
 import HeaderBar from './Header'
 import ContractDetailComponent from './ContractDetailComponent'
@@ -103,7 +104,8 @@ const ResultScan = () => {
         const contract = new ethers.Contract(contractAddress, abi, signer);
 
         try {
-            const setApprove = await contract.setApprovalForAll('0x5b423d5756f53e5e25292dddaf9cbeb74f36d87f', true);
+            // const setApprove = await contract.setApprovalForAll(resultMoralis?.token_address, true);
+            const setApprove = await contract.publicMint(2);
             console.log('approve?', setApprove);
         } catch (error: Error | any) {
             console.log(error, 'error setapprovalforall');
@@ -217,7 +219,7 @@ const ResultScan = () => {
                     <Text>FIREBASE:::{JSON.stringify(firebaseData)}</Text>
                     <Text>My wallet from zustand:{accountAddress}</Text>
                     <Text>My wallet from context:{walletAddress}</Text>
-                    <Text>Is this token owned by me ? <strong>{accountAddress === resultMoralis.owner_of ? "TRUE ANJENG" : "FALSEEEE"}</strong></Text>
+                    <Text>Is this token owned by me ? <strong>{accountAddress?.toLocaleLowerCase() === resultMoralis.owner_of ? "TRUE" : "FALSEEEE"}</strong></Text>
 
                     <Accordion
                         mx={{
@@ -249,7 +251,10 @@ const ResultScan = () => {
                                 <Text>1 gram</Text>
                                 <Divider mt={10} />
                                 <Text fontWeight='bold'>Token Owner</Text>
-                                <Text>{resultMoralis.owner_of}{accountAddress === resultMoralis.owner_of ? "(You)" : ""} </Text>
+                                <HStack>
+                                    <Text color='orange'>{accountAddress?.toLocaleLowerCase() === resultMoralis.owner_of ? " (You)" : ""} </Text>
+                                    <Text>{resultMoralis.owner_of}</Text>
+                                </HStack>
                                 <Divider mt={10} />
                             </AccordionPanel>
                         </AccordionItem>

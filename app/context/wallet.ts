@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { create } from 'zustand'
+import { devtools, persist } from 'zustand/middleware'
 
 export interface WalletState {
     accountAddress: string;
@@ -7,8 +8,15 @@ export interface WalletState {
     resetAccountAddress: () => void;
 };
 
-export const useWalletStore = create<WalletState>((set) => ({
-    accountAddress: "",
-    setAccountAddress: (payload: string | undefined) => set(() => ({ accountAddress: payload })),
-    resetAccountAddress: () => set(() => ({ accountAddress: "" })),
-}));
+export const useWalletStore = create<WalletState>()(
+    devtools(
+        persist(
+            (set) => ({
+                accountAddress: "",
+                setAccountAddress: (payload: string | undefined) => set(() => ({ accountAddress: payload })),
+                resetAccountAddress: () => set(() => ({ accountAddress: "" })),
+            }),
+            { name: 'walletStore' },
+        )
+    )
+);

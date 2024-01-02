@@ -40,9 +40,26 @@
 
 'use client'
 
+import { Divider, HStack, Heading, useBreakpointValue } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 
-const YourComponent: React.FC = () => {
+const TradingViewWidget: React.FC = () => {
+    const width = useBreakpointValue(
+        {
+            base: '400',
+            md: '800',
+        },
+
+    );
+    const height = useBreakpointValue(
+        {
+            base: '300',
+            md: '600',
+        },
+    );
+
+
+
     useEffect(() => {
         // Function to insert script tags dynamically
         const loadScript = (url: string, id: string) => {
@@ -65,8 +82,8 @@ const YourComponent: React.FC = () => {
                 widgetScript.text = `
           v_widget_type="chart_gold_antam";
           v_period=90; // hari
-          v_width=900;
-          v_height=500;
+          v_width=${width};
+          v_height=${height};
           he_org_show_chart(v_widget_type, v_period, v_width, v_height, 'div_chart_antam');
         `;
                 document.body.appendChild(widgetScript);
@@ -75,8 +92,11 @@ const YourComponent: React.FC = () => {
     }, []);
 
     return (
-        <div id="div_chart_antam" style={{ alignItems: 'center' }}></div>
+        <>
+            <div id="div_chart_antam" style={{ alignItems: 'center' }}></div>
+            <Divider bg={'gray.100'} my={20}/>
+        </>
     );
 };
 
-export default YourComponent;
+export default TradingViewWidget;
