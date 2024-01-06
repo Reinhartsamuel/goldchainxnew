@@ -30,10 +30,8 @@ import { addDocumentFirebase } from '@/apis/firebaseApi'
 import { ContractInterface, ethers } from 'ethers'
 
 import { POSClient } from "@maticnetwork/maticjs"
-import { AbiDecodingDataSizeTooSmallError } from 'viem'
 import { wallet } from '@/services/sequence'
-
-
+import { trimAddress } from '@/services/utils'
 
 const ResultScan = () => {
     const [showResult, setShowResult] = useState<boolean>(false);
@@ -171,6 +169,12 @@ const ResultScan = () => {
     }, [])
 
 
+    useEffect(() => {
+        console.log(firebaseData, "firebaseData")
+        console.log(resultMoralis, "resultMoralis")
+    }, [resultMoralis, firebaseData])
+
+
     return (
         <>
             {(!showResult && resultMoralis === null) ?
@@ -189,16 +193,23 @@ const ResultScan = () => {
                         w={'100%'}
                     >
                         <Box
-                            bg='red'
                             margin={0}
                             mt={100}
                             position={'relative'}
                             rounded={'2xl'}
                             overflow={'hidden'}
                         >
-                            <Image
-                                src={firebaseData ? firebaseData.image_path : 'https://cdn.dribbble.com/userupload/4487675/file/still-2ef9e84caa94f5f5510171e03f5318b2.png?resize=800x600&vertical=center'}
-                            />
+                            {firebaseData && firebaseData?.type === 'video' ?
+
+                                <video width="750" height="500" loop autoPlay muted>
+                                    <source src={firebaseData?.image_path} />
+                                </video>
+                                : firebaseData?.type === 'image' ?
+                                    <Image
+                                        src={firebaseData ? firebaseData.image_path : 'https://cdn.dribbble.com/userupload/4487675/file/still-2ef9e84caa94f5f5510171e03f5318b2.png?resize=800x600&vertical=center'}
+                                    /> :
+                                    <></>}
+
                             {resultMoralis.token_address &&
                                 <Box
                                     bottom={0}
@@ -210,16 +221,16 @@ const ResultScan = () => {
                                     rounded={'xl'}
                                 >
                                     <Heading size="md">
-                                        {resultMoralis.token_address}
+                                        {trimAddress(resultMoralis?.token_address)}
                                     </Heading>
                                 </Box>}
                         </Box>
                     </Box>
-                    <Text><strong>MORALIS:::</strong>{JSON.stringify(resultMoralis)}</Text>
+                    {/* <Text><strong>MORALIS:::</strong>{JSON.stringify(resultMoralis)}</Text>
                     <Text>FIREBASE:::{JSON.stringify(firebaseData)}</Text>
                     <Text>My wallet from zustand:{accountAddress}</Text>
                     <Text>My wallet from context:{walletAddress}</Text>
-                    <Text>Is this token owned by me ? <strong>{accountAddress?.toLocaleLowerCase() === resultMoralis.owner_of ? "TRUE" : "FALSEEEE"}</strong></Text>
+                    <Text>Is this token owned by me ? <strong>{accountAddress?.toLocaleLowerCase() === resultMoralis.owner_of ? "TRUE" : "FALSEEEE"}</strong></Text> */}
 
                     <Accordion
                         mx={{
@@ -242,18 +253,18 @@ const ResultScan = () => {
                             </h2>
                             <AccordionPanel pb={4}>
                                 <Text fontWeight='bold'>Contract address</Text>
-                                <Text>{resultMoralis.token_address}</Text>
+                                <Text>{trimAddress(resultMoralis?.token_address)}</Text>
                                 <Divider mt={10} />
                                 <Text fontWeight='bold'>Token ID</Text>
                                 <Text>{resultMoralis.token_id}</Text>
                                 <Divider mt={10} />
                                 <Text fontWeight='bold'>Weight</Text>
-                                <Text>1 gram</Text>
+                                <Text>{firebaseData?.weight} gram</Text>
                                 <Divider mt={10} />
                                 <Text fontWeight='bold'>Token Owner</Text>
                                 <HStack>
-                                    <Text color='orange'>{accountAddress?.toLocaleLowerCase() === resultMoralis.owner_of ? " (You)" : ""} </Text>
                                     <Text>{resultMoralis.owner_of}</Text>
+                                    <Text color='orange'>{accountAddress?.toLocaleLowerCase() === resultMoralis.owner_of ? " (You)" : ""} </Text>
                                 </HStack>
                                 <Divider mt={10} />
                             </AccordionPanel>
