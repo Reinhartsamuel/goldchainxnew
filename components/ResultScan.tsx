@@ -348,7 +348,7 @@ const ResultScan = () => {
                                         <Text my={5} fontWeight={'bold'}>Perhatian!</Text>
                                         <Text textAlign={'center'}>Dengan transfer kepemilikan token maka kepemilikan akan berpindah dan anda bukan lagi pemilik serta kehilangan hak untuk memindahkan kepemilikan serta benefit lainnya</Text>
 
-                                        <Text>My wallet: {walletAddress}</Text>
+                                        <Text textAlign={'center'}>My wallet: {walletAddress}</Text>
                                     </VStack>
                                 </Box>
                             </AccordionPanel>
