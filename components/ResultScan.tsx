@@ -48,32 +48,32 @@ const ResultScan = () => {
 
 
 
-    const write = async () => {
-        console.log('anjay')
-        let wallet: sequence.provider.SequenceProvider;
-        let signer;
-        try {
-            wallet = sequence.getWallet();
-            signer = wallet.getSigner();
-        } catch (error: Error | any) {
-            wallet = sequence.initWallet();
-            console.log(error.message, 'error getwallet and get signer')
-        }
+    // const write = async () => {
+    //     console.log('anjay')
+    //     let wallet: sequence.provider.SequenceProvider;
+    //     let signer;
+    //     try {
+    //         wallet = sequence.getWallet();
+    //         signer = wallet.getSigner();
+    //     } catch (error: Error | any) {
+    //         wallet = sequence.initWallet();
+    //         console.log(error.message, 'error getwallet and get signer')
+    //     }
 
-        let contractaddress = resultMoralis?.token_address;
-        let contract = new ethers.Contract(contractaddress, abi, signer);
-        console.log(contract);
-        try {
-            const setApprove = await contract.setApprovalForAll('0x5b423d5756f53e5e25292dddaf9cbeb74f36d87f', true);
-            console.log('approve?', setApprove);
-        } catch (error: Error | any) {
-            console.log(error, 'error setapprovalforall');
-        };
-    };
+    //     let contractaddress = resultMoralis?.token_address;
+    //     let contract = new ethers.Contract(contractaddress, abi, signer);
+    //     console.log(contract);
+    //     try {
+    //         const setApprove = await contract.setApprovalForAll('0x5b423d5756f53e5e25292dddaf9cbeb74f36d87f', true);
+    //         console.log('approve?', setApprove);
+    //     } catch (error: Error | any) {
+    //         console.log(error, 'error setapprovalforall');
+    //     };
+    // };
 
 
     const handleApproval = async () => {
-        console.log('anjay')
+        if (!receiver) return window.alert("Alamat Wallet tujuan harus diisi.")
         // let wallet: sequence.provider.SequenceProvider;
         let signer;
         try {
@@ -87,7 +87,7 @@ const ResultScan = () => {
             console.log(error.message, 'error getwallet and get signer')
         }
         // Replace with your Polygon RPC endpoint
-        const polygonRpcEndpoint = "https://polygon-mainnet.infura.io/v3/8CKNFTHGX9IXX4J8756D5N1MZ2ZZ7TWFE4";
+        const polygonRpcEndpoint = "https://polygon-mainnet.infura.io/v3/87a1ee6e7bd247a69ad4f9034437b542";
 
         // Replace with your Polygon contract address and ABI
         const contractAddress = resultMoralis?.token_address;
@@ -100,13 +100,16 @@ const ResultScan = () => {
 
         // Create a contract instance
         const contract = new ethers.Contract(contractAddress, abi, signer);
-
         try {
             // const setApprove = await contract.setApprovalForAll(resultMoralis?.token_address, true);
-            const setApprove = await contract.publicMint(2);
-            console.log('approve?', setApprove);
+            // const setApprove = await contract.publicMint(2);
+            // console.log('approve?', setApprove);
+            const transferMetaData = await contract.transferFrom(wallet.getAddress(), receiver, resultMoralis?.token_address);
+            await submitRequestTransfer();
+            // console.log('transferMetaData?', transferMetaData);
         } catch (error: Error | any) {
             console.log(error, 'error setapprovalforall');
+            window.alert(error.message)
         };
     }
 
@@ -115,15 +118,14 @@ const ResultScan = () => {
     const submitRequestTransfer = async () => {
         setIsLoading(true);
         const submitData = {
-            from: walletAddress,
+            from: walletAddress || accountAddress,
             to: receiver,
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
-            status: "REQUESTED"
         };
         if (!receiver) return window.alert("Alamat Wallet tujuan harus diisi.")
         try {
-            const id = await addDocumentFirebase('request_transfers', submitData);
+            const id = await addDocumentFirebase('transactions', submitData);
             if (!id) {
                 window.alert("Request failed");
             } else {
@@ -212,6 +214,7 @@ const ResultScan = () => {
 
                             {resultMoralis.token_address &&
                                 <Box
+                                    mt={10}
                                     bottom={0}
                                     left={0}
                                     position="absolute"
@@ -233,6 +236,7 @@ const ResultScan = () => {
                     <Text>Is this token owned by me ? <strong>{accountAddress?.toLocaleLowerCase() === resultMoralis.owner_of ? "TRUE" : "FALSEEEE"}</strong></Text> */}
 
                     <Accordion
+                        mt={10}
                         mx={{
                             base: 5,
                             md: 10
@@ -344,7 +348,7 @@ const ResultScan = () => {
                                         <Text my={5} fontWeight={'bold'}>Perhatian!</Text>
                                         <Text textAlign={'center'}>Dengan transfer kepemilikan token maka kepemilikan akan berpindah dan anda bukan lagi pemilik serta kehilangan hak untuk memindahkan kepemilikan serta benefit lainnya</Text>
 
-                                        <Text>{walletAddress}</Text>
+                                        <Text>My wallet: {walletAddress}</Text>
                                     </VStack>
                                 </Box>
                             </AccordionPanel>

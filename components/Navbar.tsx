@@ -15,6 +15,7 @@ import {
     Heading,
     Avatar,
     useToast,
+    Text,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
 import { ReactElement, useEffect, useState } from 'react'
@@ -23,6 +24,7 @@ import { useRouter } from 'next/navigation'
 import { trimAddress } from '@/services/utils'
 import { logout } from '@/services/sequence'
 import { useWalletStore } from '@/app/context/wallet'
+import Image from 'next/image'
 
 interface Props {
     children: string
@@ -81,19 +83,9 @@ export default function Navbar(): ReactElement {
         <>
             <Box bg='gray.800' px={4}>
                 <Flex alignItems={'center'} justifyContent={'space-between'}>
-                    <IconButton
-                        bg='gray.700'
-                        color='gray.500'
-                        size={'md'}
-                        icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-                        aria-label={'Open Menu'}
-                        display={{ md: 'none' }}
-                        onClick={isOpen ? onClose : onOpen}
-                    />
+
                     <HStack h={16} spacing={8} alignItems={'center'}>
-                        <Heading color='gray.100'
-                            onClick={() => console.log(accountAddress)}
-                        >GCX</Heading>
+                        <Image src="/Asset_7.svg" alt="me" width="120" height="50" />
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                             {Links.map((link) => (
                                 <NavLink key={link}>{link}</NavLink>
@@ -138,6 +130,26 @@ export default function Navbar(): ReactElement {
                             </MenuList>
                         </Menu>
                     </Flex>
+                    <HStack>
+                        <Button
+                            fontStyle={'extrabold'}
+                            size={'xs'}
+                            fontWeight={'normal'}
+                            px={3}
+                            bg='white'
+                        >
+                            <Text fontWeight='bold' color='black'>{wallet.isConnected() ? "Go to Profile " : "Login"}</Text>
+                        </Button>
+                        <IconButton
+                            bg='#00000000'
+                            color='gray.100'
+                            size={'md'}
+                            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+                            aria-label={'Open Menu'}
+                            display={{ md: 'none' }}
+                            onClick={isOpen ? onClose : onOpen}
+                        />
+                    </HStack>
                 </Flex>
 
                 {isOpen ? (

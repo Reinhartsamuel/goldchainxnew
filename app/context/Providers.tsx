@@ -11,6 +11,13 @@ import Moralis from 'moralis';
 export function Providers({ children }: { children: ReactNode }) {
 	const config = {
 		initialColorMode: 'dark',
+		styles: {
+			global: () => ({
+			  body: {
+				bg: "red",
+			  },
+			}),
+		  },
 	};
 	const theme = extendTheme({ config });
 

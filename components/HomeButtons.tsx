@@ -28,6 +28,21 @@ const HomeButtons = () => {
 
     return (
         <Stack spacing={{ base: 3, sm: 4 }} direction={{ base: 'column', sm: 'row' }}>
+              <Button
+                rounded={'full'}
+                size={'md'}
+                fontWeight={'normal'}
+                px={6}
+                colorScheme='blue'
+                onClick={() => {
+                    if (wallet.isConnected()) {
+                        // logout(toast, router, resetAccountAddress);
+                        router.push('/profile')
+                    } else login(toast, router, setAccountAddress, setWalletAddress);
+                }}
+            >
+               Beli Emas
+            </Button>
             <Button
                 rounded={'full'}
                 size={'md'}
