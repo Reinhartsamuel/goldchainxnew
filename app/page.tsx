@@ -41,7 +41,7 @@ export default function Home() {
                             <Heading
                                 lineHeight={1.2}
                                 fontWeight={600}
-                                fontSize={{ base: '2xl', sm: '4xl', lg: '6xl' }}
+                                fontSize={{ base: '2xl', sm : '3xl', lg: '4xl' }}
                                 textAlign={'center'}
                             >
                                 <Text
@@ -73,7 +73,7 @@ export default function Home() {
                             </Text>
                             <HomeButtons />
                         </Stack>
-                        <Flex
+                        {/* <Flex
                             flex={1}
                             justify={'center'}
                             align={'center'}
@@ -120,13 +120,13 @@ export default function Home() {
 
 
                             </Box>
-                        </Flex>
+                        </Flex> */}
                     </Stack>
-                    <VStack my={70}>
+                    {/* <VStack my={70}>
                         <TradingViewWidget />
-                    </VStack>
+                    </VStack> */}
                 </Container>
-                <Container maxW={'5xl'}>
+                {/* <Container maxW={'5xl'}>
                     <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
                         <Flex>
                             <Image
@@ -148,7 +148,7 @@ export default function Home() {
                             </Text>
                         </Stack>
                     </SimpleGrid>
-                </Container>
+                </Container> */}
             </ComponentWrapper>
             <Flex marginY={20}></Flex>
             <Footer />

@@ -74,16 +74,10 @@ const ResultScan = () => {
 
     const handleApproval = async () => {
         if (!receiver) return window.alert("Alamat Wallet tujuan harus diisi.")
-        // let wallet: sequence.provider.SequenceProvider;
         let signer;
         try {
-            // wallet = sequence.getWallet();
             signer = wallet.getSigner();
         } catch (error: Error | any) {
-            // wallet = sequence.initWallet({
-            //     projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
-            //     defaultNetwork: 'polygon'
-            // });
             console.log(error.message, 'error getwallet and get signer')
         }
         // Replace with your Polygon RPC endpoint
@@ -92,19 +86,10 @@ const ResultScan = () => {
         // Replace with your Polygon contract address and ABI
         const contractAddress = resultMoralis?.token_address;
 
-        // Replace with your Polygon wallet private key or use a different signing method
-        const privateKey = "fdfb72ce9754e3cbc1e79e44a8e20804cebd3c4a347605c6a3462a8de05b8784";
-
-        // Connect to the Polygon network
-        const provider = new ethers.providers.JsonRpcProvider(polygonRpcEndpoint);
-
         // Create a contract instance
         const contract = new ethers.Contract(contractAddress, abi, signer);
         try {
-            // const setApprove = await contract.setApprovalForAll(resultMoralis?.token_address, true);
-            // const setApprove = await contract.publicMint(2);
-            // console.log('approve?', setApprove);
-            const transferMetaData = await contract.transferFrom(wallet.getAddress(), receiver, resultMoralis?.token_address);
+            const transferMetaData = await contract.transferFrom(accountAddress || walletAddress, receiver, resultMoralis?.token_id);
             await submitRequestTransfer();
             // console.log('transferMetaData?', transferMetaData);
         } catch (error: Error | any) {
@@ -267,7 +252,7 @@ const ResultScan = () => {
                                 <Divider mt={10} />
                                 <Text fontWeight='bold'>Token Owner</Text>
                                 <HStack>
-                                    <Text>{resultMoralis.owner_of}</Text>
+                                    <Text>{trimAddress(resultMoralis.owner_of)}</Text>
                                     <Text color='orange'>{accountAddress?.toLocaleLowerCase() === resultMoralis.owner_of ? " (You)" : ""} </Text>
                                 </HStack>
                                 <Divider mt={10} />

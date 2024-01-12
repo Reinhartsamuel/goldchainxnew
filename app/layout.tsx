@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { Providers } from './context/Providers'
 import { WalletProvider } from './context/walletContext'
+import { Container } from '@chakra-ui/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,7 +23,9 @@ export default function RootLayout({
       <Providers>
         <WalletProvider>
           <body className={inter.className}>
-            {children}
+            <Container maxW='xl'>
+              {children}
+            </Container>
           </body>
         </WalletProvider>
       </Providers>
