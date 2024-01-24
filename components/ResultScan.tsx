@@ -177,6 +177,8 @@ const ResultScan = () => {
                     <Box
                         // position={'relative'}
                         // maxH={340}
+                        justifyContent={'center'}
+                        alignItems={'center'}
                         w={'100%'}
                     >
                         <Box

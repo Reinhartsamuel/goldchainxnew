@@ -8,7 +8,7 @@ import React from 'react'
 export default async function page() {
     return (
         <>
-            <Container p={0} w={"full"} maxW="2xl" bg='teals'>
+            <Container p={0} w={"full"} maxW="xl">
                 <ResultScan />
             </Container>
         </>

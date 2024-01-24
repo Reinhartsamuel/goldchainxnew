@@ -2,7 +2,7 @@ import ComponentWrapper from '@/components/ComponentWrapper'
 import { Footer } from '@/components/Footer'
 import HomeButtons from '@/components/HomeButtons'
 import Navbar from '@/components/Navbar'
-import TradingViewWidget from '@/components/TradingViewWidget'
+import ReactHtmlParser from 'react-html-parser';
 import {
     Container,
     Stack,
@@ -10,19 +10,53 @@ import {
     Box,
     Heading,
     Text,
-    Button,
-    Image,
     Icon,
-    IconButton,
-    createIcon,
     IconProps,
-    SimpleGrid,
-    StackDivider,
+    Image,
     Center,
-    HStack,
     VStack,
 } from '@chakra-ui/react'
-// import { IoAnalyticsSharp, IoLogoBitcoin, IoSearchSharp } from 'react-icons/io5'
+import React from 'react';
+import SocialMedia from '@/components/SocialMedia';
+
+const intros = [
+    {
+        title: 'Kita Adalah Saudagar',
+        text: '<p style="color:black">Setiap orang Indonesia, bisa jadi Saudagar! Emas hanya bisa memberikan keuntungan keuangan APABILA <strong>DIPERJUALBELIKAN</strong>. Dengan teknologi yang digunakannya, transaksi tidak lagi hanya terjadi antara Pusat dan Pembeli, Para Saudagar dapat saling melakukan transaksi dengan mudah dan aman. Menabung sambil mendapatkan keuntungan melalui jual beli emas</p>'
+    },
+    {
+        title: 'Pertama Di Indonesia!',
+        text: '<p style="color:black">Emas Indonesia pertama yang menggunakan teknologi Blockchain.<strong>Teknologi</strong> yang memungkinkan Para Saudagar untuk saling bertransaksi dan memindahkan kepemilikannya secara langsung kepada siapapun yang dikehendaki oleh pemiliknya tanpa perlu melalui perantara dari pusat.</p>'
+    },
+    {
+        title: 'Keamanan Tinggi',
+        text: '<p style="color:black"><strong>Keaslian dan Kepemilikan</strong> dari emas Saudagar melekat pada kemasan serta dilindungi dengan teknologi Blockchain yang membuat setiap keping emas Saudagar unik dan hanya ada 1 di Dunia.</p>'
+    },
+];
+
+const contents = [
+    {
+        title: 'Beli',
+        text: 'Beli Emas Saudagar sama dengan menjadi Saudagar seutuhnya, beli dari pusat bisa, bahkan kamu bisa jadi mendapatkan harga lebih murah jika membeli dari pemilik Emas Saudagar siapapun itu. Gabung di Komunitas Saudagar.'
+    },
+    {
+        title: 'Jual (Buy Back)',
+        text: 'Jual Emas Saudagar bisa kemana? Ke Pusat tentunya, tetapi tidak cuma ke pusat aja, bisa jadi Jual ke Komunitas Saudagar malah lebih menguntungkan untuk kamu. Gabung di Komunitas Saudagar sekarang.'
+    },
+    {
+        title: 'Gadai',
+        text: 'Soon, gadai akan disediakan, bayangkan gadai BPKB mobil tapi mobilnya tetap bisa dipakai.. Begitu juga di saudagar, ‘gadai’ kepemilikannya saja dana bisa langsung cair. Butuh dana darurat?'
+    },
+    {
+        title: 'Lelang',
+        text: 'Berikan penawaran terbaikmu di Komunitas Saudagar, jika hargamu dirasa cocok dan ada yang minat membeli maka bisa dilakukan pembelian oleh siapapun dalam Komunitas.'
+    },
+    {
+        title: 'Tabungan Emas',
+        text: '5 tahun lagi harga emas umumnya meningkat (berdasarkan histori), book emas kepingan besar di harga sekarang, cicil tiap bulan.'
+    },
+];
+
 
 
 export default function Home() {
@@ -30,50 +64,50 @@ export default function Home() {
     return (
         <>
             <Navbar />
-            <ComponentWrapper>
-                <Container maxW={'7xl'}>
-                    <Stack
-                        align={'center'}
-                        spacing={{ base: 8, md: 10 }}
-                        py={{ base: 20, md: 28 }}
-                        direction={{ base: 'column', md: 'row' }}>
-                        <Stack flex={1} spacing={{ base: 5, md: 10 }}>
-                            <Heading
-                                lineHeight={1.2}
-                                fontWeight={600}
-                                fontSize={{ base: '2xl', sm : '3xl', lg: '4xl' }}
-                                textAlign={'center'}
+            {/* <ComponentWrapper> */}
+            <Container>
+                <Stack
+                    align={'center'}
+                    spacing={{ base: 8, md: 10 }}
+                    py={{ base: 20, md: 28 }}
+                    direction={{ base: 'column', md: 'row' }}>
+                    <Stack flex={1} spacing={{ base: 5, md: 10 }}>
+                        <Heading
+                            lineHeight={1.2}
+                            fontWeight={600}
+                            fontSize={{ base: '2xl', sm: '3xl', lg: '4xl' }}
+                            textAlign={'center'}
+                        >
+                            <Text
+                                as={'span'}
+                                position={'relative'}
                             >
-                                <Text
-                                    as={'span'}
-                                    position={'relative'}
-                                >
-                                    Authenticity and Ownership
-                                </Text>
-                                <br />
-                                <Text as={'span'} color={'yellow.400'}>
-                                    of Gold Bar Backed by
-                                </Text>
-                                <Text>Blockchain Technology.</Text>
-                            </Heading>
-
-                            <Box borderRadius={10} overflow={'hidden'}>
-
-                                <video width="750" height="500" loop autoPlay muted>
-                                    <source src={'https://firebasestorage.googleapis.com/v0/b/saudagar-92dc2.appspot.com/o/products%2Fsaudagar_black_gradient.mp4?alt=media&token=72591312-074d-4912-bdac-232c340f96c5'} />
-                                </video>
-                            </Box>
-
-
-
-
-                            <Text color={'gray.400'}>
-                                Cek keaslian emas dengan scan QR code di belakang kemasan:
-                                "Scan, Verifikasi, Perdagangkan: Mengubah Kepemilikan Emas dengan Inovasi Blockchain – Emas Anda, Token Anda, Kendali Anda!
+                                Kepemilikan dan Otentisitas
                             </Text>
-                            <HomeButtons />
-                        </Stack>
-                        {/* <Flex
+                            <br />
+                            <Text as={'span'} color={'yellow.400'}>
+                                of Gold Bar Backed by
+                            </Text>
+                            <Text>Blockchain Technology.</Text>
+                        </Heading>
+
+                        <Box borderRadius={10} overflow={'hidden'}>
+
+                            <video width="750" height="500" loop autoPlay muted>
+                                <source src={'https://firebasestorage.googleapis.com/v0/b/saudagar-92dc2.appspot.com/o/products%2Fsaudagar_black_gradient.mp4?alt=media&token=72591312-074d-4912-bdac-232c340f96c5'} />
+                            </video>
+                        </Box>
+
+
+
+
+                        <Text color={'gray.400'}>
+                            Cek keaslian emas dengan scan QR code di belakang kemasan:
+                            "Scan, Verifikasi, Perdagangkan: Mengubah Kepemilikan Emas dengan Inovasi Blockchain – Emas Anda, Token Anda, Kendali Anda!
+                        </Text>
+                        <HomeButtons />
+                    </Stack>
+                    {/* <Flex
                             flex={1}
                             justify={'center'}
                             align={'center'}
@@ -121,12 +155,12 @@ export default function Home() {
 
                             </Box>
                         </Flex> */}
-                    </Stack>
-                    {/* <VStack my={70}>
+                </Stack>
+                {/* <VStack my={70}>
                         <TradingViewWidget />
                     </VStack> */}
-                </Container>
-                {/* <Container maxW={'5xl'}>
+            </Container>
+            {/* <Container maxW={'5xl'}>
                     <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
                         <Flex>
                             <Image
@@ -149,7 +183,48 @@ export default function Home() {
                         </Stack>
                     </SimpleGrid>
                 </Container> */}
-            </ComponentWrapper>
+            <Heading size='md'>Kenapa saudagar?</Heading>
+
+            <Stack>
+                {intros.map((intro, i) => {
+                    const htmlString = intro.text;
+                    const theObj = { __html: htmlString };
+                    return (
+                        <Box
+                            key={i}
+                            margin={5}
+                            rounded={'lg'}
+                            bg={'white'}
+                            padding={5}
+                        >
+                            <Heading fontWeight={500} color='black' mt={2}>{intro.title}</Heading>
+                            <div>{ReactHtmlParser(htmlString)}</div>
+                        </Box>
+                    )
+                })}
+
+            </Stack>
+            <Stack>
+                {contents.map((content, i) => {
+                    const htmlString = content.text;
+                    return (
+                        <Box
+                            key={i}
+                            margin={5}
+                            // rounded={'lg'}
+                            // bg={'white'}
+                            padding={5}
+                        >
+                            <Heading fontWeight={500} mt={2}>{content.title}</Heading>
+                            <div>{ReactHtmlParser(htmlString)}</div>
+                        </Box>
+                    )
+                })}
+
+            </Stack>
+            <SocialMedia />
+
+            {/* </ComponentWrapper> */}
             <Flex marginY={20}></Flex>
             <Footer />
         </>

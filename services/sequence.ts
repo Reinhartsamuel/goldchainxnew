@@ -3,6 +3,7 @@ import { UseToastOptions } from "@chakra-ui/react";
 import Moralis from "moralis";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Error from "next/error";
+import { trimAddress } from "./utils";
 
 export const wallet = sequence.initWallet({
     defaultNetwork: 'polygon',
@@ -80,7 +81,7 @@ export const login = async (
         if (result.connected) {
             toast({
                 title: "Wallet connected!!",
-                description: `Connected to wallet ${result.session?.accountAddress}`,
+                description: `Connected to wallet ${trimAddress(result.session?.accountAddress)}`,
                 status: 'success',
                 isClosable: true,
                 duration: 5000

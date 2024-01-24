@@ -10,7 +10,6 @@ interface TransactionProps {
 	to: string;
 	from: string;
 	url: string;
-
 }
 
 const TransactionItemComponent: React.FC<{ item: TransactionProps }> = ({ item }) => {
@@ -57,8 +56,8 @@ const TransactionItemComponent: React.FC<{ item: TransactionProps }> = ({ item }
 const page = () => {
 	return (
 		<>
-			<Container maxW="2xl">
-				<HeaderBar />
+			<HeaderBar />
+			<Container maxW="xl">
 				<Box maxH={340} overflow={'hidden'}>
 					<Image
 						src={'https://cdn.dribbble.com/userupload/4487675/file/still-2ef9e84caa94f5f5510171e03f5318b2.png?resize=800x600&vertical=center'}

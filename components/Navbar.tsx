@@ -86,11 +86,11 @@ export default function Navbar(): ReactElement {
 
                     <HStack h={16} spacing={8} alignItems={'center'}>
                         <Image src="/Asset_7.svg" alt="me" width="120" height="50" />
-                        <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
+                        {/* <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                             {Links.map((link) => (
                                 <NavLink key={link}>{link}</NavLink>
                             ))}
-                        </HStack>
+                        </HStack> */}
                     </HStack>
                     <Flex alignItems={'center'}>
                         {/* <Button
@@ -108,7 +108,16 @@ export default function Navbar(): ReactElement {
                                 variant={'link'}
                                 cursor={'pointer'}
                                 minW={0}>
-                                <Heading size="md">{isConnected && trimAddress(address)}</Heading>
+                                {/* <Heading size="md">{isConnected && trimAddress(address)}</Heading> */}
+                                <Button
+                                    fontStyle={'extrabold'}
+                                    size={'xs'}
+                                    fontWeight={'normal'}
+                                    px={3}
+                                    bg='white'
+                                >
+                                    <Text fontWeight='bold' color='black'>{wallet.isConnected() ? "Go to Profile " : "Login"}</Text>
+                                </Button>
                                 {/* <Avatar
                                     size={'sm'}
                                     src={
@@ -130,7 +139,7 @@ export default function Navbar(): ReactElement {
                             </MenuList>
                         </Menu>
                     </Flex>
-                    <HStack>
+                    {/* <HStack>
                         <Button
                             fontStyle={'extrabold'}
                             size={'xs'}
@@ -149,16 +158,16 @@ export default function Navbar(): ReactElement {
                             display={{ md: 'none' }}
                             onClick={isOpen ? onClose : onOpen}
                         />
-                    </HStack>
+                    </HStack> */}
                 </Flex>
 
                 {isOpen ? (
                     <Box pb={4} display={{ md: 'none' }}>
-                        <Stack as={'nav'} spacing={4}>
+                        {/* <Stack as={'nav'} spacing={4}>
                             {Links.map((link) => (
                                 <NavLink key={link}>{link}</NavLink>
                             ))}
-                        </Stack>
+                        </Stack> */}
                     </Box>
                 ) : null}
             </Box>

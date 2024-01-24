@@ -16,7 +16,6 @@ const UserProfile = () => {
         <>
             <Stack>
                 <HStack>
-                    <Heading size='md'>{JSON.stringify(walletZustand)}</Heading>
                     <Box
                      _hover={{
                             transform: 'scale(1.1)'

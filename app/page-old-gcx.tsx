@@ -31,7 +31,7 @@ export default function Home() {
 	return (
 		<>
 			<Navbar />
-			<ComponentWrapper>
+			{/* <ComponentWrapper> */}
 				<Container maxW={'7xl'}>
 					<Stack
 						align={'center'}
@@ -133,7 +133,7 @@ export default function Home() {
 						</Stack>
 					</SimpleGrid>
 				</Container>
-			</ComponentWrapper>
+			{/* </ComponentWrapper> */}
 			<Flex marginY={20}></Flex>
 			<Footer />
 		</>

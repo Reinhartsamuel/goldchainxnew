@@ -15,7 +15,7 @@ const HeaderBar: React.FC = () => {
             position={'absolute'}
             minW={'xs'}
             w={'100%'}
-            maxW={'2xl'}
+            maxW={'xl'}
             flexDir={'row'}
             justifyContent={'space-between'}
             p={10}
@@ -38,7 +38,7 @@ const HeaderBar: React.FC = () => {
                 <IoIosArrowBack color={'#33363F'} size={20} />
             </Box>
 
-            <HStack gap={2}>
+            <HStack mr={10}gap={2}>
                 <Box
                     _active={{
                         bg: 'red'

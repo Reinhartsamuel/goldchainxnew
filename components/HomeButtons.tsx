@@ -19,7 +19,7 @@ const HomeButtons = () => {
     const toast = useToast({
         containerStyle: {
             maxWidth: '95%',
-          },
+        },
     });
     const wallet = sequence.getWallet();
     const [isConnected, setIsConnected] = useState<boolean>(wallet.isConnected());
@@ -27,11 +27,33 @@ const HomeButtons = () => {
     const { setWalletAddress } = useWallet();
 
     return (
-        <Stack spacing={{ base: 3, sm: 4 }} direction={{ base: 'column', sm: 'row' }}>
-              <Button
+        <Stack spacing={{ base: 3, sm: 4 }}
+            // direction={{ base: 'column', sm: 'column', lg:'row' }}
+            direction={'column'}
+        >
+            <Button
+                borderColor={'#DABC07'}
+                borderWidth={2}
                 rounded={'full'}
-                size={'md'}
-                fontWeight={'normal'}
+                size={'lg'}
+                fontWeight={'extrabold'}
+                px={6}
+                bg='#6A54A3'
+                onClick={() => {
+                    if (wallet.isConnected()) {
+                        // logout(toast, router, resetAccountAddress);
+                        router.push('/profile')
+                    } else login(toast, router, setAccountAddress, setWalletAddress);
+                }}
+            >
+                Beli Emas
+            </Button>
+            <Button
+                borderColor={'#DABC07'}
+                borderWidth={2}
+                rounded={'full'}
+                size={'lg'}
+                fontWeight={'extrabold'}
                 px={6}
                 colorScheme='blue'
                 onClick={() => {
@@ -41,31 +63,20 @@ const HomeButtons = () => {
                     } else login(toast, router, setAccountAddress, setWalletAddress);
                 }}
             >
-               Beli Emas
+                {wallet.isConnected() ? "Go to Profile " : "Login Wallet"}
             </Button>
             <Button
+                borderColor={'#DABC07'}
+                borderWidth={2}
+                bg='white'
                 rounded={'full'}
-                size={'md'}
-                fontWeight={'normal'}
+                size={'lg'}
+                fontWeight={'extrabold'}
                 px={6}
-                colorScheme='blue'
-                onClick={() => {
-                    if (wallet.isConnected()) {
-                        // logout(toast, router, resetAccountAddress);
-                        router.push('/profile')
-                    } else login(toast, router, setAccountAddress, setWalletAddress);
-                }}
-            >
-                {wallet.isConnected() ? "Go to Profile " : "Login Wallet"} 
-            </Button>
-            <Button
-                rounded={'full'}
-                size={'md'}
-                fontWeight={'normal'}
-                px={6}
+                color={'black'}
                 onClick={() => router.push('scan-now')}
             >
-                SCAN QR CODE SEKARANG
+                Cek Keaslian dan Kepemilikan
             </Button>
         </Stack>
     );
