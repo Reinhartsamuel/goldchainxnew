@@ -3,15 +3,19 @@
 import { wallet } from '@/services/sequence'
 import { trimAddress } from '@/services/utils'
 import { Box, Button, HStack, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useDisclosure, useToast } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaRegCopy } from 'react-icons/fa'
 import { LuWallet } from 'react-icons/lu'
 import { IoQrCode } from "react-icons/io5";
 import QRCode from "react-qr-code";
+import { sequence } from '0xsequence'
 
 const UserProfile = () => {
     const toast = useToast();
-    const walletAddress = wallet.getAddress();
+    // const walletAddress = wallet.getAddress();
+    const [isConnected, setIsConnected] = useState<boolean>(wallet.isConnected());
+    const [walletAddress, setWalletAddress] = useState('');
+
 
     const handleWalletCopy = () => {
         navigator.clipboard.writeText(walletAddress);
@@ -22,6 +26,23 @@ const UserProfile = () => {
         })
     };
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+
+    useEffect(() => {
+        if (!isConnected) sequence.initWallet();
+        setIsConnected(isConnected);
+        const wallet = sequence.initWallet();
+        const getAddress = async () => {
+            try {
+                const x = await wallet.getAddress();
+                setWalletAddress(x);
+            } catch (error) {
+                console.log(error, "error getting address");
+            };
+        };
+        getAddress();
+
+    }, [wallet.isConnected()])
 
     return (
         <>
@@ -59,9 +80,9 @@ const UserProfile = () => {
                     <ModalHeader>Modal Title</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                    <Heading size='sm'>
-                        {trimAddress(walletAddress)}
-                    </Heading>
+                        <Heading size='sm'>
+                            {trimAddress(walletAddress)}
+                        </Heading>
                         <QRCode
                             size={256}
                             level={'H'}
