@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
     Box,
     Text,
@@ -19,6 +19,17 @@ import {
     Input,
     Button,
     HStack,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalCloseButton,
+    ModalBody,
+    ModalFooter,
+    useDisclosure,
+    InputGroup,
+    InputLeftElement,
+    InputRightElement,
 } from '@chakra-ui/react'
 import HeaderBar from './Header'
 import ContractDetailComponent from './ContractDetailComponent'
@@ -32,6 +43,9 @@ import { ContractInterface, ethers } from 'ethers'
 import { POSClient } from "@maticnetwork/maticjs"
 import { wallet } from '@/services/sequence'
 import { trimAddress } from '@/services/utils'
+import { QrReader } from 'react-qr-reader'
+import { LuWallet } from 'react-icons/lu'
+import { IoQrCode } from "react-icons/io5";
 
 const ResultScan = () => {
     const [showResult, setShowResult] = useState<boolean>(false);
@@ -42,7 +56,7 @@ const ResultScan = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [receiver, setReceiver] = useState("");
     const [abi, setAbi] = useState<ContractInterface>("");
-
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const posClient = new POSClient();
 
@@ -124,6 +138,18 @@ const ResultScan = () => {
         };
     };
 
+
+    const handleResult = useCallback(async (result: any) => {
+        if (typeof result?.text === "string" && result?.text?.length > 0) {
+            try {
+                setReceiver(result.text);
+                onClose();
+            } catch (error: Error | any) {
+                console.log(error.message, 'error setting id from text')
+            }
+        };
+        // return console.log(result.text, "this the id from qr")
+    }, []);
 
 
     useEffect(() => {
@@ -301,20 +327,43 @@ const ResultScan = () => {
                                     justify-content={'center'}
 
                                 >
-                                    <Input
-                                        onChange={e => setReceiver(e.target.value)}
-                                        textAlign={'center'}
-                                        _placeholder={{
-                                            textAlign: 'center',
-                                            verticalAlign: 'middle',
-                                            color: 'gray.600',
-                                            fontWeight: '400'
-                                        }}
-                                        fontWeight={'bold'}
-                                        color="gray.800"
-                                        bg="gray.100"
-                                        placeholder='Insert Wallet Address Destination'
-                                    />
+                                    <InputGroup>
+                                        <InputLeftElement
+                                            pointerEvents='none'
+                                            color='gray.300'
+                                            fontSize='1.2em'
+                                        >
+                                            <LuWallet color='black' />
+                                        </InputLeftElement>
+                                        <Input
+                                            onChange={e => setReceiver(e.target.value)}
+                                            value={receiver}
+                                            textAlign={'center'}
+                                            _placeholder={{
+                                                textAlign: 'center',
+                                                verticalAlign: 'middle',
+                                                color: 'gray.600',
+                                                fontWeight: '400'
+                                            }}
+                                            fontWeight={'bold'}
+                                            color="gray.800"
+                                            bg="gray.100"
+                                            placeholder='Insert Wallet Address Destination'
+                                        />
+                                        <InputRightElement
+                                            cursor='pointer'
+                                            onClick={onOpen}
+                                            _hover={{
+                                                transform: 'scale(1.2)'
+                                            }}
+                                            _active={{
+                                                transform: 'scale(1.1)',
+                                                color: 'red'
+                                            }}
+                                        >
+                                            <IoQrCode color='gray' />
+                                        </InputRightElement>
+                                    </InputGroup>
                                 </Box>
                                 <Box
                                     my={10}>
@@ -341,7 +390,32 @@ const ResultScan = () => {
                             </AccordionPanel>
                         </AccordionItem>
                     </Accordion>
+                    <Modal isOpen={isOpen} onClose={onClose}>
+                        <ModalOverlay />
+                        <ModalContent>
+                            <ModalHeader>Modal Title</ModalHeader>
+                            <ModalCloseButton />
+                            <ModalBody>
+                                <Heading size='sm' color='black'>
+                                    Scan QR wallet penerima:
+                                </Heading>
+                                <QrReader
+                                    onResult={handleResult}
+                                    // style={{ width: '500px' }}
+                                    scanDelay={100}
+                                    constraints={{
+                                        facingMode: 'environment'
+                                    }}
+                                />
+                            </ModalBody>
 
+                            <ModalFooter>
+                                <Button colorScheme="orange" mr={3} onClick={onClose}>
+                                    Close
+                                </Button>
+                            </ModalFooter>
+                        </ModalContent>
+                    </Modal>
 
                 </>
             }

@@ -27,7 +27,6 @@
     "@emotion/styled": "^11.11.0",
     "@moralisweb3/common-evm-utils": "^2.23.2",
     "@moralisweb3/next": "^2.23.2",
-    "@next/font": "^14.0.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

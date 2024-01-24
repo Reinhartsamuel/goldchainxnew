@@ -1,12 +1,9 @@
 'use client'
 
-import { useWalletStore } from '@/app/context/wallet'
-import { useWallet } from '@/app/context/walletContext'
 import { wallet } from '@/services/sequence'
-// import { wallet } from '@/services/sequence'
 import { trimAddress } from '@/services/utils'
 import { Box, Button, HStack, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useDisclosure, useToast } from '@chakra-ui/react'
-import React, { ReactElement, useRef } from 'react'
+import React from 'react'
 import { FaRegCopy } from 'react-icons/fa'
 import { LuWallet } from 'react-icons/lu'
 import { IoQrCode } from "react-icons/io5";
@@ -14,8 +11,6 @@ import QRCode from "react-qr-code";
 
 const UserProfile = () => {
     const toast = useToast();
-    // const walletContext = useWallet();
-    // const walletZustand = useWalletStore();
     const walletAddress = wallet.getAddress();
 
     const handleWalletCopy = () => {
