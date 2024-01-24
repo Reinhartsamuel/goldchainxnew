@@ -11,8 +11,8 @@ const sans = IBM_Plex_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'GoldChainX',
-  description: 'Emas terpercaya dan 100% otentik',
+  title: 'Saudagar',
+  description: 'Semua bisa jadi saudagar',
 }
 
 export default function RootLayout({

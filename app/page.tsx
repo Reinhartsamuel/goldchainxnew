@@ -86,9 +86,9 @@ export default function Home() {
                             </Text>
                             <br />
                             <Text as={'span'} color={'yellow.400'}>
-                                of Gold Bar Backed by
+                               LOGAM MULIA EMAS
                             </Text>
-                            <Text>Blockchain Technology.</Text>
+                            <Text> didukung teknologi Blockchain</Text>
                         </Heading>
 
                         <Box borderRadius={10} overflow={'hidden'}>
@@ -226,7 +226,7 @@ export default function Home() {
 
             {/* </ComponentWrapper> */}
             <Flex marginY={20}></Flex>
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }

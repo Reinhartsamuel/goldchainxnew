@@ -147,7 +147,7 @@ const page = () => {
 					<TabPanels>
 						<TabPanel>
 							<SimpleGrid gap={1} w={'full'} columns={2}>
-								{Array(10).fill('a').map((item, i) => (
+								{/* {Array(10).fill('a').map((item, i) => (
 									<Box
 										display={'flex'}
 										flexDir={'column'}
@@ -175,7 +175,7 @@ const page = () => {
 										</Box>
 
 									</Box>
-								))}
+								))} */}
 							</SimpleGrid>
 						</TabPanel>
 						<TabPanel>
