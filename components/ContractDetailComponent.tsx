@@ -122,53 +122,6 @@ const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoral
     //     };
     // };
 
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (inputInvalid) setInputInvalid(false);
-        setAddress(e.target.value);
-    };
-
-
-    const runMoralis = async (data: MoralisProps | undefined): Promise<void> => {
-        setLoadingMoralis(true);
-        setLoadingFirebase(false);
-        const address = data?.contract_address;
-        const chain = EvmChain.POLYGON;
-
-        try {
-            await Moralis.start({
-                apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6ImFkN2ZhYTRhLTNlZWYtNGY4MC1iNDUwLTUyZDQwMTgxYmY1ZiIsIm9yZ0lkIjoiMzY1ODUzIiwidXNlcklkIjoiMzc2MDAxIiwidHlwZUlkIjoiYmFjYzhjMTYtOTJhNi00ZTE4LWE2ZjAtZjZkNzRhY2VlMDg3IiwidHlwZSI6IlBST0pFQ1QiLCJpYXQiOjE3MDEwMDEwNTIsImV4cCI6NDg1Njc2MTA1Mn0.KZa9YIqf2n4WX4gkMa3Z-RA4yfJ3uwWaeXuKHaWaydM"
-                // ...and any other configuration
-            });
-        } catch (error: Error | any) {
-            console.log(error.message, "error starting moralis")
-        };
-
-
-        const tokenId = data?.token_id;
-        try {
-
-            const response = await Moralis.EvmApi.nft.getNFTTokenIdOwners({
-                address: address || "",
-                chain,
-                tokenId: tokenId || "",
-            });
-
-            const json = response.toJSON();
-            console.log(json?.result[0], "response moralis: json?.result[0]")
-            const data = json?.result[0];
-
-            // setResultMoralis(json.result[0]);
-            console.log("data moralis", data);
-            // setResultMoralis(data);
-            // return setLoadingMoralis(false);
-        } catch (error: Error | any) {
-            console.log(error.message, "error reading from moralis")
-        } finally {
-            setLoadingMoralis(false);
-        };
-    };
-
     const read = async () => {
         let firebaseDoc: DocumentData | null | undefined;
         if (id !== undefined) {
@@ -189,16 +142,6 @@ const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoral
             setLoadingFirebase(false);
             const address = firebaseDoc?.contract_address;
             const chain = EvmChain.POLYGON;
-
-            // try {
-            //     await Moralis.start({
-            //         apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6ImFkN2ZhYTRhLTNlZWYtNGY4MC1iNDUwLTUyZDQwMTgxYmY1ZiIsIm9yZ0lkIjoiMzY1ODUzIiwidXNlcklkIjoiMzc2MDAxIiwidHlwZUlkIjoiYmFjYzhjMTYtOTJhNi00ZTE4LWE2ZjAtZjZkNzRhY2VlMDg3IiwidHlwZSI6IlBST0pFQ1QiLCJpYXQiOjE3MDEwMDEwNTIsImV4cCI6NDg1Njc2MTA1Mn0.KZa9YIqf2n4WX4gkMa3Z-RA4yfJ3uwWaeXuKHaWaydM"
-            //         // ...and any other configuration
-            //     });
-            // } catch (error: Error | any) {
-            //     console.log(error.message, "error starting moralis");
-            //     return;
-            // };
 
 
             const tokenId = firebaseDoc?.token_id;
@@ -230,9 +173,6 @@ const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoral
             } finally {
                 setLoadingMoralis(false);
             };
-
-
-            // await getDetails(result?.text);
         }
     }
 
@@ -265,8 +205,9 @@ const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoral
                     // style={{ width: '500px' }}
                     scanDelay={1000}
                     constraints={{
-                        facingMode: 'environment'
+                        facingMode: 'environment',
                     }}
+                    videoStyle={{ border: 'solid', borderWidth: '4px', borderColor: id.length === 0 ? 'red' : 'green' }}
                 />
             ) :
                 loadingFirebase ? <Center my={100}>

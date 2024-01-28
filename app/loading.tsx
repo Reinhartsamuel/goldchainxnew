@@ -1,6 +1,4 @@
-'use client'
-import { Heading, Spinner, Stack } from "@chakra-ui/react";
-
+import { Spinner, Stack } from "@chakra-ui/react";
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
   return (

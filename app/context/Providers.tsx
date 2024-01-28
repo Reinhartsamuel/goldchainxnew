@@ -3,7 +3,6 @@
 import { CacheProvider } from '@chakra-ui/next-js'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { ReactNode, useEffect } from 'react'
-import { Web3Modal } from './Web3Modal';
 // import { sequence } from '0xsequence';
 import Moralis from 'moralis';
 
@@ -12,11 +11,11 @@ export function Providers({ children }: { children: ReactNode }) {
 	const config = {
 		styles: {
 			global: () => ({
-			  body: {
-				bg: "red",
-			  },
+				body: {
+					bg: "red",
+				},
 			}),
-		  },
+		},
 	};
 	const theme = extendTheme({ config });
 
@@ -39,9 +38,7 @@ export function Providers({ children }: { children: ReactNode }) {
 	return (
 		<CacheProvider>
 			<ChakraProvider theme={theme}>
-				<Web3Modal>
-					{children}
-				</Web3Modal>
+				{children}
 			</ChakraProvider>
 		</CacheProvider>
 	);

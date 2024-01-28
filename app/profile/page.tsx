@@ -4,54 +4,13 @@ import { Box, Center, Container, Divider, Flex, HStack, Heading, Image, SimpleGr
 import React from 'react'
 import HeaderBar from "@/components/Header";
 import UserProfile from "@/components/UserProfile";
+import TransactionHistory from "@/components/TransactionHistory";
+import Assets from "@/components/Assets";
 
 
-interface TransactionProps {
-	to: string;
-	from: string;
-	url: string;
-}
 
-const TransactionItemComponent: React.FC<{ item: TransactionProps }> = ({ item }) => {
-	return (
-		<Box
-			bg={'gray.700'}
-			borderWidth={2}
-			borderColor={'gray.100'}
-			borderRadius={20}
-			overflow={'hidden'}
-			my={3}
-			display={'flex'}
-			flexDir={'column'}
-			alignItems={'center'}
-		>
-			<Flex w={'full'} my={2}>
-				<Image
-					borderRadius={20}
-					w={28}
-					h={28}
-					src={'https://cdn.dribbble.com/userupload/4487675/file/still-2ef9e84caa94f5f5510171e03f5318b2.png?resize=800x600&vertical=center'}
-				/>
-				<Stack gap={0}>
-					<Text>Buy</Text>
-					<Text>Emasin #0x70bdE7F57</Text>
-					<Text>100 Gram</Text>
 
-					<Text mt={5}>11.30.34 Tue, 5 Dec 2023 (GMT+7)</Text>
-				</Stack>
-				<HStack>
-					<Divider orientation={'vertical'} />
-					<Stack gap={0}>
-						<Text fontWeight={'bold'}>From</Text>
-						<Text>0x70bd...E8000</Text>
-						<Text fontWeight={'bold'} mt={5}>To</Text>
-						<Text>0x70bd...A9000</Text>
-					</Stack>
-				</HStack>
-			</Flex>
-		</Box>
-	)
-};
+
 
 const page = () => {
 	return (
@@ -146,46 +105,10 @@ const page = () => {
 
 					<TabPanels>
 						<TabPanel>
-							<SimpleGrid gap={1} w={'full'} columns={2}>
-								{/* {Array(10).fill('a').map((item, i) => (
-									<Box
-										display={'flex'}
-										flexDir={'column'}
-										key={i}
-										justifyContent={'center'}
-										alignItems='center'
-										px={10}
-										my={2}
-									>
-										<Box
-											bg='gray.200'
-											borderColor={'gray.50'}
-											borderWidth={2}
-											borderRadius={20}
-											overflow={'hidden'}
-										>
-											<Image
-												src={'https://cdn.dribbble.com/userupload/4487675/file/still-2ef9e84caa94f5f5510171e03f5318b2.png?resize=800x600&vertical=center'}
-											/>
-											<Stack p={2} gap={0}>
-												<Text fontSize={14} fontWeight={'bold'} color='gray.700'>Emasin #0x70bdE7F57</Text>
-												<Text fontSize={12} color='gray.700'>(0x70bd...E7F57 )</Text>
-												<Text mt={5} fontSize={12} color='gray.700'>100 gram</Text>
-											</Stack>
-										</Box>
-
-									</Box>
-								))} */}
-							</SimpleGrid>
+							<Assets />
 						</TabPanel>
 						<TabPanel>
-
-							{Array(10).fill('a').map((x, i) => (
-								<TransactionItemComponent
-									key={i}
-									item={x}
-								/>
-							))}
+							<TransactionHistory />
 						</TabPanel>
 					</TabPanels>
 				</Tabs>
