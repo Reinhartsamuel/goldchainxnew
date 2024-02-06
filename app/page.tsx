@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react'
 import React from 'react';
 import SocialMedia from '@/components/SocialMedia';
+import FrontBanner from '@/components/FrontBanner';
 
 const intros = [
     {
@@ -98,67 +99,13 @@ export default function Home() {
                             </video>
                         </Box>
 
-
-
-
                         <Text color={'gray.400'}>
                             Cek keaslian emas dengan scan QR code di belakang kemasan:
                             "Scan, Verifikasi, Perdagangkan: Mengubah Kepemilikan Emas dengan Inovasi Blockchain – Emas Anda, Token Anda, Kendali Anda!
                         </Text>
                         <HomeButtons />
                     </Stack>
-                    {/* <Flex
-                            flex={1}
-                            justify={'center'}
-                            align={'center'}
-                            position={'relative'}
-                            w={'full'}>
-                            <Blob
-                                w={'150%'}
-                                h={'150%'}
-                                position={'absolute'}
-                                top={'-20%'}
-                                left={0}
-                                zIndex={-1}
-                                color={'red.50'}
-                            />
-                            <Box
-                                position={'relative'}
-                                height={'300px'}
-                                rounded={'2xl'}
-                                boxShadow={'2xl'}
-                                width={'full'}
-                                overflow={'hidden'}>
-                                <IconButton
-                                    aria-label={'Play Button'}
-                                    variant={'ghost'}
-                                    _hover={{ bg: 'transparent' }}
-                                    size={'lg'}
-                                    color={'white'}
-                                    position={'absolute'}
-                                    left={'50%'}
-                                    top={'50%'}
-                                    transform={'translateX(-50%) translateY(-50%)'}
-                                />
-
-                                <Image
-                                    alt={'Hero Image'}
-                                    fit={'cover'}
-                                    align={'center'}
-                                    w={'100%'}
-                                    h={'100%'}
-                                    src={
-                                        'https://firebasestorage.googleapis.com/v0/b/saudagar-92dc2.appspot.com/o/image-assets%2Fgold.jpeg?alt=media&token=4cfb30d3-519e-4677-adf7-de1937acb015'
-                                    }
-                                />
-
-
-                            </Box>
-                        </Flex> */}
                 </Stack>
-                {/* <VStack my={70}>
-                        <TradingViewWidget />
-                    </VStack> */}
             </Container>
             {/* <Container maxW={'5xl'}>
                     <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
@@ -183,6 +130,8 @@ export default function Home() {
                         </Stack>
                     </SimpleGrid>
                 </Container> */}
+
+                <FrontBanner />
             <Heading size='md'>Kenapa saudagar?</Heading>
 
             <Stack>

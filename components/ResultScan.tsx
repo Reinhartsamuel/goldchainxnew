@@ -58,7 +58,7 @@ const ResultScan = () => {
     const [abi, setAbi] = useState<ContractInterface>("");
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const posClient = new POSClient();
+    // const posClient = new POSClient();
 
 
 
@@ -169,17 +169,17 @@ const ResultScan = () => {
     }, [resultMoralis]);
 
 
-    useEffect(() => {
-        const initPosClient = async () => {
+    // useEffect(() => {
+    //     const initPosClient = async () => {
 
-            await posClient.init({
-                network: 'testnet',  // 'testnet' or 'mainnet'
-                version: 'mumbai', // 'mumbai' or 'v1'
+    //         await posClient.init({
+    //             network: 'testnet',  // 'testnet' or 'mainnet'
+    //             version: 'mumbai', // 'mumbai' or 'v1'
 
-            });
-        };
-        initPosClient();
-    }, [])
+    //         });
+    //     };
+    //     initPosClient();
+    // }, [])
 
 
     useEffect(() => {

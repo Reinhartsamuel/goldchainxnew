@@ -6,17 +6,13 @@ import {
     Stack,
     Text,
     Button,
-    Input,
-    FormHelperText,
-    FormControl,
     useToast,
     StackDivider,
     Box,
-    Select,
     Center,
     Spinner,
 } from '@chakra-ui/react'
-import React, { DispatchWithoutAction, SetStateAction, useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios';
 import Moralis from "moralis";
 import { EvmChain } from "@moralisweb3/common-evm-utils";
@@ -25,6 +21,8 @@ import { getSingleDocumentFirebase } from '@/apis/firebaseApi';
 import ButtonTransfer from './ButtonTransfer';
 import Error from 'next/error';
 import { DocumentData, Timestamp } from 'firebase/firestore';
+import { Camera } from 'expo-camera';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
 
 interface MoralisProps {
@@ -52,75 +50,14 @@ interface ChildComponentProps {
 
 
 const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoralis, setFirebaseData }) => {
-    const [address, setAddress] = useState("");
     const [result, setResult] = useState<any>();
-    const [isLoading, setIsLoading] = useState(false);
     const [loadingFirebase, setLoadingFirebase] = useState(false);
     const [loadingMoralis, setLoadingMoralis] = useState(false);
-    const [inputInvalid, setInputInvalid] = useState(false);
-    const [connection, setConnection] = useState("testnet");
     const [isScanning, setIsScanning] = useState(false);
-    // const [resultMoralis, setResultMoralis] = useState<ResultDataMoralis | null>(null);
-    // const [firebaseData, setFirebaseData] = useState<DocumentData | null | undefined>();
     const [id, setId] = useState<string>("");
 
 
     const toast = useToast();
-
-    const baseUrl = connection === "testnet" ? 'https://api-testnet.polygonscan.com/' : 'https://api.polygonscan.com/';
-
-    const checkContract = async () => {
-        console.log("baseUrl", baseUrl)
-        if (address) {
-            setIsLoading(true);
-            try {
-                const { data } = await axios.get(`${baseUrl}api?module=contract&action=getcontractcreation&contractaddresses=${address}&apikey=8CKNFTHGX9IXX4J8756D5N1MZ2ZZ7TWFE4`);
-
-
-                if (data.status == '1') setResult(data.result[0]);
-                if (data.status == '0') toast({
-                    status: 'error',
-                    isClosable: true,
-                    duration: 9000,
-                    title: "Error!",
-                    description: data.result || data.message
-                })
-            } catch (error: Error | any) {
-                console.log(error.message)
-            } finally {
-                setIsLoading(false)
-            };
-        } else {
-            setInputInvalid(true);
-        };
-    };
-
-    // const getAbi = async () => {
-    //     console.log("baseUrl", baseUrl)
-
-    //     if (address) {
-    //         setIsLoading(true);
-    //         try {
-    //             const { data } = await axios.get(`https://api-testnet.polygonscan.com/api?module=contract&action=getabi&address=${address}&apikey=8CKNFTHGX9IXX4J8756D5N1MZ2ZZ7TWFE4`);
-
-    //             // console.log(data)
-    //             if (data.status == '1') setResult({ abi: data.result });
-    //             if (data.status == '0') toast({
-    //                 status: 'error',
-    //                 isClosable: true,
-    //                 duration: 9000,
-    //                 title: "Error!",
-    //                 description: data.result || data.message
-    //             })
-    //         } catch (error: Error | any) {
-    //             console.log(error.message)
-    //         } finally {
-    //             setIsLoading(false)
-    //         };
-    //     } else {
-    //         setInputInvalid(true);
-    //     };
-    // };
 
     const read = async () => {
         let firebaseDoc: DocumentData | null | undefined;
@@ -176,8 +113,6 @@ const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoral
         }
     }
 
-
-
     const handleResult = useCallback(async (result: any) => {
         if (typeof result?.text === "string" && result?.text?.length > 0) {
             try {
@@ -186,7 +121,6 @@ const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoral
                 console.log(error.message, 'error setting id from text')
             }
         };
-        // return console.log(result.text, "this the id from qr")
     }, []);
 
 
@@ -226,7 +160,14 @@ const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoral
                         :
                         <></>}
 
+            <iframe src="..." allow="microphone; camera;">
+                <Camera
+                    barCodeScannerSettings={{
+                        barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
+                    }}
+                />
 
+            </iframe>
 
             <Stack
                 textAlign={'center'}
