@@ -21,8 +21,6 @@ import { getSingleDocumentFirebase } from '@/apis/firebaseApi';
 import ButtonTransfer from './ButtonTransfer';
 import Error from 'next/error';
 import { DocumentData, Timestamp } from 'firebase/firestore';
-import { Camera } from 'expo-camera';
-import { BarCodeScanner } from 'expo-barcode-scanner';
 
 
 interface MoralisProps {
@@ -160,14 +158,6 @@ const ContractDetailComponent: React.FC<ChildComponentProps> = ({ setResultMoral
                         :
                         <></>}
 
-            <iframe src="..." allow="microphone; camera;">
-                <Camera
-                    barCodeScannerSettings={{
-                        barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
-                    }}
-                />
-
-            </iframe>
 
             <Stack
                 textAlign={'center'}
