@@ -36,9 +36,15 @@ const TransactionHistory = () => {
 
 
     useEffect(() => {
-        if (!isConnected) sequence.initWallet();
+        if (!isConnected) sequence.initWallet({
+            defaultNetwork: 'polygon',
+            projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
+        });
         setIsConnected(isConnected);
-        const wallet = sequence.initWallet();
+        const wallet = sequence.initWallet({
+            defaultNetwork: 'polygon',
+            projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
+        });
         const getAddress = async () => {
             try {
                 const x = await wallet.getAddress();
