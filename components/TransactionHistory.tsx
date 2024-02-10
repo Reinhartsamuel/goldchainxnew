@@ -19,7 +19,7 @@ const TransactionHistory = () => {
         //       method : 'POST',
         //       body : JSON.stringify({
         //         address : walletAddress,
-                
+
         //       })
         //     });
 
@@ -32,19 +32,15 @@ const TransactionHistory = () => {
 
     useEffect(() => {
         getTransactionHistory();
-    },[walletAddress]);
+    }, [walletAddress]);
 
 
     useEffect(() => {
-        if (!isConnected) sequence.initWallet({
-            defaultNetwork: 'polygon',
-            projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
-        });
+        if (!isConnected) sequence.initWallet('Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA');
+
         setIsConnected(isConnected);
-        const wallet = sequence.initWallet({
-            defaultNetwork: 'polygon',
-            projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
-        });
+
+        const wallet = sequence.initWallet('Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA');;
         const getAddress = async () => {
             try {
                 const x = await wallet.getAddress();

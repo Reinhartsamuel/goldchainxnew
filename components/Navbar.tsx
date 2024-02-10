@@ -52,15 +52,8 @@ const NavLink = (props: Props) => {
 }
 
 export default function Navbar(): ReactElement {
-    const wallet = sequence.initWallet({
-        defaultNetwork: 'polygon',
-        projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
-    });
+    const wallet = sequence.initWallet('Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA');
     const router = useRouter();
-    sequence.initWallet({
-        defaultNetwork: 'polygon',
-        projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
-    });
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [isConnected, setIsConnected] = useState<boolean>(wallet.isConnected());

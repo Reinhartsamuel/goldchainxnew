@@ -38,12 +38,10 @@ const HomeButtons = () => {
                 size={'lg'}
                 fontWeight={'extrabold'}
                 px={6}
-                bg='#6A54A3'
+                // bg='#6A54A3'
+                colorScheme='pink'
                 onClick={() => {
-                    if (wallet.isConnected()) {
-                        // logout(toast, router, resetAccountAddress);
-                        router.push('/profile')
-                    } else login(toast, router, setAccountAddress, setWalletAddress);
+                  window.open('kuda')
                 }}
             >
                 Beli Emas

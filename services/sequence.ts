@@ -5,10 +5,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import Error from "next/error";
 import { trimAddress } from "./utils";
 
-export const wallet = sequence.initWallet({
-    defaultNetwork: 'polygon',
-    projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
-});
+export const wallet = sequence.initWallet('Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA');
 
 // If your dapp runs on a different EVM-compatible blockchain, you can specify its name
 export const connectToSequence = async () => {

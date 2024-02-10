@@ -38,7 +38,7 @@ export default function FrontBanner() {
 
 
   // buttons as the screen size changes
-  const top = useBreakpointValue({ base: '90%', md: '50%' })
+  const top = useBreakpointValue({ base: '1%', md: '50%' })
   const side = useBreakpointValue({ base: '30%', md: '40px' })
 
   const getCards = async () => {
@@ -114,7 +114,7 @@ export default function FrontBanner() {
         {cards.map((card, index) => (
           <Box
             key={index}
-            height={'2xl'}
+            height={'sm'}
             position="relative"
             backgroundPosition="center"
             backgroundRepeat="no-repeat"

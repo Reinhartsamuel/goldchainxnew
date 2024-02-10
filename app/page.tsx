@@ -19,6 +19,7 @@ import {
 import React from 'react';
 import SocialMedia from '@/components/SocialMedia';
 import FrontBanner from '@/components/FrontBanner';
+import Features from '@/components/Features';
 
 const intros = [
     {
@@ -132,6 +133,7 @@ export default function Home() {
                 </Container> */}
 
                 <FrontBanner />
+                <Features />
             <Heading size='md'>Kenapa saudagar?</Heading>
 
             <Stack>
