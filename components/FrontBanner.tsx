@@ -1,6 +1,6 @@
 'use client'
 
-import React, { RefObject, useEffect, useState } from 'react'
+import React, { ReactElement, RefObject, useEffect, useRef, useState } from 'react'
 import {
   Box,
   IconButton,
@@ -14,22 +14,28 @@ import {
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
 // And react-slick as our Carousel Lib
 import Slider from 'react-slick'
-import { getCollectionFirebase, getCollectionFirebaseV2 } from '@/apis/firebaseApi'
-import { DocumentData } from 'firebase/firestore'
+import { getCollectionFirebaseV2 } from '@/apis/firebaseApi'
 
 // Settings for the slider
 const settings = {
   dots: true,
-  arrows: true,
+  arrows: false,
   fade: true,
   infinite: true,
   autoplay: true,
   speed: 500,
-  autoplaySpeed: 2000,
+  autoplaySpeed: 5000,
   slidesToShow: 1,
   slidesToScroll: 1,
 }
 
+interface CardProps {
+  title: string
+  text: string
+  image: string
+}
+
+interface CaptionCarouselProps { }
 export default function FrontBanner() {
   // As we have used custom buttons, we need a reference variable to
   // change the state
@@ -110,7 +116,7 @@ export default function FrontBanner() {
         <BiRightArrowAlt size="40px" />
       </IconButton>
       {/* Slider */}
-      <Slider {...settings} ref={(slider: RefObject<HTMLDivElement>) => setSlider(slider)}>
+      <Slider {...settings}>
         {cards.map((card, index) => (
           <Box
             key={index}
