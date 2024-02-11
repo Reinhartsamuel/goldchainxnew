@@ -3,7 +3,7 @@ import { IBM_Plex_Sans, Inter } from 'next/font/google'
 import './globals.css'
 import { Providers } from './context/Providers'
 import { WalletProvider } from './context/walletContext'
-import { Container } from '@chakra-ui/react'
+import { Box, Center, Container } from '@chakra-ui/react'
 
 const sans = IBM_Plex_Sans({
   weight: ['400'],
@@ -26,9 +26,11 @@ export default function RootLayout({
       <Providers>
         <WalletProvider>
           <body className={sans.className}>
-          <Container maxW='xl'>
-              {children}
-            </Container>
+          <Center>
+            <Box w={['sm', 'lg', 'xl']}>
+                {children}
+              </Box>
+          </Center>
           </body>
         </WalletProvider>
       </Providers>

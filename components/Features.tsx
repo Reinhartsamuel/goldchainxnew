@@ -75,7 +75,7 @@ const intros = [
 
 export default function Features() {
     return (
-        <Box p={4}>
+        <Box p={4} mt={28}>
             <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
                 <Heading fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'}>
                     Kenapa saudagar?

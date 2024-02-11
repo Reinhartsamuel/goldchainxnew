@@ -1,14 +1,9 @@
-import { LuWallet } from "react-icons/lu";
-import { FaRegCopy } from "react-icons/fa";
 import { Box, Center, Container, Divider, Flex, HStack, Heading, Image, SimpleGrid, Spacer, Stack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import HeaderBar from "@/components/Header";
 import UserProfile from "@/components/UserProfile";
 import TransactionHistory from "@/components/TransactionHistory";
 import Assets from "@/components/Assets";
-
-
-
 
 
 
@@ -52,7 +47,7 @@ const page = () => {
 				>
 					<UserProfile />
 				</Center>
-				<Box
+				{/* <Box
 					bg={'gray.700'}
 					p={5}
 					borderWidth={2}
@@ -87,9 +82,10 @@ const page = () => {
 
 
 
-				</Box>
+				</Box> */}
+				
 
-				<Tabs>
+				<Tabs mt={20}>
 					<TabList>
 						<Tab width={'50%'}>
 							<Heading size="md">

@@ -93,7 +93,9 @@ export default function Home() {
                             <Text> didukung teknologi Blockchain</Text>
                         </Heading>
 
-                        <Box borderRadius={10} overflow={'hidden'}>
+                        <Box borderRadius={10} overflow={'hidden'}
+                        //  boxShadow={' 1px 1px 200px white'}
+                        >
 
                             <video width="750" height="500" loop autoPlay muted>
                                 <source src={'https://firebasestorage.googleapis.com/v0/b/saudagar-92dc2.appspot.com/o/products%2Fsaudagar_black_gradient.mp4?alt=media&token=72591312-074d-4912-bdac-232c340f96c5'} />
@@ -134,8 +136,7 @@ export default function Home() {
 
                 <FrontBanner />
                 <Features />
-            <Heading size='md'>Kenapa saudagar?</Heading>
-
+            {/* <Heading size='md'>Kenapa saudagar?</Heading>
             <Stack>
                 {intros.map((intro, i) => {
                     const htmlString = intro.text;
@@ -153,8 +154,7 @@ export default function Home() {
                         </Box>
                     )
                 })}
-
-            </Stack>
+            </Stack> */}
             <Stack>
                 {contents.map((content, i) => {
                     const htmlString = content.text;
@@ -173,10 +173,9 @@ export default function Home() {
                 })}
 
             </Stack>
-            <SocialMedia />
+            {/* <SocialMedia /> */}
 
             {/* </ComponentWrapper> */}
-            <Flex marginY={20}></Flex>
             {/* <Footer /> */}
         </>
     )

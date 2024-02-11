@@ -9,6 +9,7 @@ import {
   Heading,
   Text,
   Container,
+  Image,
 } from '@chakra-ui/react'
 // Here we have used react-icons package for the icons
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
@@ -27,6 +28,7 @@ const settings = {
   autoplaySpeed: 5000,
   slidesToShow: 1,
   slidesToScroll: 1,
+  appendDots: (dots : ReactElement) => <ul>{dots}</ul>,
 }
 
 interface CardProps {
@@ -57,95 +59,27 @@ export default function FrontBanner() {
   }
   useEffect(() => { getCards() }, [])
   return (
-    <Box position={'relative'} height={'600px'} width={'full'} overflow={'hidden'}>
-      {/* CSS files for react-slick */}
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-      />
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-      />
-      {/* Left Icon */}
-      <IconButton
-        aria-label="left-arrow"
-        variant="ghost"
-        position="absolute"
-        left={side}
-        top={top}
-        // transform={'translate(0%, -50%)'}
-        zIndex={2}
-        color={'white'}
-        // opacity={0.3}
-        _hover={{
-          backgroundColor: '#00000000',
-          transform: 'scale(1.1)',
-          // transition : 'ease-in'
-        }}
-        _active={{
-          transform: 'scale(1.5)',
-          // transition : 'ease-in'
-        }}
-        onClick={() => slider?.slickPrev()}>
-        <BiLeftArrowAlt size="40px" />
-      </IconButton>
-      {/* Right Icon */}
-      <IconButton
-        aria-label="right-arrow"
-        variant="ghost"
-        position="absolute"
-        right={side}
-        top={top}
-        // transform={'translate(0%, -50%)'}
-        zIndex={2}
-        color={'white'}
-        // opacity={0.3}
-        _hover={{
-          backgroundColor: '#00000000',
-          transform: 'scale(1.1)',
-          // transition : 'ease-in'
-        }}
-        _active={{
-          transform: 'scale(1.5)',
-          // transition : 'ease-in'
-        }}
-        onClick={() => slider?.slickNext()}>
-        <BiRightArrowAlt size="40px" />
-      </IconButton>
-      {/* Slider */}
-      <Slider {...settings}>
-        {cards?.map((card, index) => (
-          <Box
-            key={index}
-            height={'sm'}
-            position="relative"
-            backgroundPosition="center"
-            backgroundRepeat="no-repeat"
-            backgroundSize="contain"
-            backgroundImage={`url(${card})`}>
-            {/* This is the block you need to change, to customize the caption */}
-            <Container size="container.lg" height="600px" position="relative">
-              <Stack
-                spacing={6}
-                w={'full'}
-                maxW={'lg'}
-                position="absolute"
-                top="50%"
-                transform="translate(0, -50%)">
-                {/* <Heading fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>
-                  {card.title}
-                </Heading>
-                <Text fontSize={{ base: 'md', lg: 'lg' }} color="GrayText">
-                  {card.text}
-                </Text> */}
-              </Stack>
-            </Container>
-          </Box>
-        ))}
-      </Slider>
-    </Box>
+    <>
+      <Box
+        // position={'relative'} borderRadius={'xl'} width={'full'} overflow={'hidden'}
+        boxShadow={' 1px 1px 200px gray'}>
+        {/* CSS files for react-slick */}
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+        />
+        <Slider {...settings}>
+          {cards?.map((card, index) => (
+            <Image key={index} src={card} width={'full'} alt={`url(${card})`} borderRadius={'lg'} />
+          ))}
+        </Slider>
+      </Box>
+    </>
   )
 }

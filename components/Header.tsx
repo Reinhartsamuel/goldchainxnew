@@ -13,9 +13,9 @@ const HeaderBar: React.FC = () => {
         <Flex
             zIndex={200}
             position={'absolute'}
-            minW={'xs'}
+            // minW={'xs'}
             w={'100%'}
-            maxW={'xl'}
+            // maxW={'xl'}
             flexDir={'row'}
             justifyContent={'space-between'}
             p={10}
