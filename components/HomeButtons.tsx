@@ -41,7 +41,7 @@ const HomeButtons = () => {
                 // bg='#6A54A3'
                 colorScheme='pink'
                 onClick={() => {
-                  window.open('wa.me/6281313383848')
+                  window.open('https://wa.me/6281313383848')
                 }}
             >
                 Beli Emas

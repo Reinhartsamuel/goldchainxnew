@@ -11,11 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { ReactElement } from 'react'
 import {
-    FcAbout,
     FcAssistant,
-    FcCollaboration,
-    FcDonate,
-    FcManager,
 } from 'react-icons/fc'
 
 interface CardProps {
@@ -30,9 +26,9 @@ const Card = ({ heading, description, icon, href }: CardProps) => {
         <Box
             // maxW={{ base: 'full', md: '275px' }}
             w={'full'}
-            borderWidth="1px"
-            borderRadius="lg"
+            borderRadius="xl"
             overflow="hidden"
+            boxShadow={' 1px 1px 50px gray'}
             p={5}>
             <Stack align={'start'} spacing={2}>
                 <Flex
@@ -60,51 +56,46 @@ const Card = ({ heading, description, icon, href }: CardProps) => {
     )
 }
 
+
+
+const intros = [
+    {
+        title: 'Kita Adalah Saudagar',
+        text: 'Setiap orang Indonesia, bisa jadi Saudagar! Emas hanya bisa memberikan keuntungan keuangan APABILA DIPERJUALBELIKAN. Dengan teknologi yang digunakannya, transaksi tidak lagi hanya terjadi antara Pusat dan Pembeli, Para Saudagar dapat saling melakukan transaksi dengan mudah dan aman. Menabung sambil mendapatkan keuntungan melalui jual beli emas'
+    },
+    {
+        title: 'Pertama Di Indonesia!',
+        text: 'Emas Indonesia pertama yang menggunakan teknologi Blockchain. Teknologi yang memungkinkan Para Saudagar untuk saling bertransaksi dan memindahkan kepemilikannya secara langsung kepada siapapun yang dikehendaki oleh pemiliknya tanpa perlu melalui perantara dari pusat.'
+    },
+    {
+        title: 'Keamanan Tinggi',
+        text: 'Keaslian dan Kepemilikan dari emas Saudagar melekat pada kemasan serta dilindungi dengan teknologi Blockchain yang membuat setiap keping emas Saudagar unik dan hanya ada 1 di Dunia.'
+    },
+];
+
 export default function Features() {
     return (
         <Box p={4}>
             <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
                 <Heading fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'}>
-                    Short heading
+                    Kenapa saudagar?
                 </Heading>
                 <Text color={'gray.600'} fontSize={{ base: 'sm', sm: 'lg' }}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis obcaecati ut
-                    cupiditate pariatur, dignissimos, placeat amet officiis.
+                    Kamu dapat melakukan transaksi emas dengan emas yang dapat dipastikan otentisitas dan histori kepemilikannya
                 </Text>
             </Stack>
 
             <Container maxW={'5xl'} mt={12}>
                 <Flex flexWrap="wrap" gridGap={6} justify="center">
-                    <Card
-                        heading={'Heading'}
-                        icon={FcAssistant}
-                        description={'Lorem ipsum dolor sit amet catetur, adipisicing elit.'}
-                        href={'#'}
-                    />
-                    <Card
-                        heading={'Heading'}
-                        icon={<Icon as={FcCollaboration} w={10} h={10} />}
-                        description={'Lorem ipsum dolor sit amet catetur, adipisicing elit.'}
-                        href={'#'}
-                    />
-                    <Card
-                        heading={'Heading'}
-                        icon={<Icon as={FcDonate} w={10} h={10} />}
-                        description={'Lorem ipsum dolor sit amet catetur, adipisicing elit.'}
-                        href={'#'}
-                    />
-                    <Card
-                        heading={'Heading'}
-                        icon={<Icon as={FcManager} w={10} h={10} />}
-                        description={'Lorem ipsum dolor sit amet catetur, adipisicing elit.'}
-                        href={'#'}
-                    />
-                    <Card
-                        heading={'Heading'}
-                        icon={<Icon as={FcAbout} w={10} h={10} />}
-                        description={'Lorem ipsum dolor sit amet catetur, adipisicing elit.'}
-                        href={'#'}
-                    />
+                    {intros.map((intro, i) => (
+                        <Card
+                            key={i}
+                            heading={intro.title}
+                            icon={<Icon as={FcAssistant} w={10} h={10} />}
+                            description={intro.text}
+                            href={'#'}
+                        />
+                    ))}
                 </Flex>
             </Container>
         </Box>

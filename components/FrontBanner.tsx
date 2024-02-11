@@ -117,7 +117,7 @@ export default function FrontBanner() {
       </IconButton>
       {/* Slider */}
       <Slider {...settings}>
-        {cards.map((card, index) => (
+        {cards?.map((card, index) => (
           <Box
             key={index}
             height={'sm'}
