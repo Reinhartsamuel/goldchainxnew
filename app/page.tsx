@@ -20,6 +20,7 @@ import React from 'react';
 import SocialMedia from '@/components/SocialMedia';
 import FrontBanner from '@/components/FrontBanner';
 import Features from '@/components/Features';
+import Html5QrScanner from '@/components/Html5QrScanner';
 
 const intros = [
     {
@@ -88,7 +89,7 @@ export default function Home() {
                             </Text>
                             <br />
                             <Text as={'span'} color={'yellow.400'}>
-                               LOGAM MULIA EMAS
+                                LOGAM MULIA EMAS
                             </Text>
                             <Text> didukung teknologi Blockchain</Text>
                         </Heading>
@@ -134,8 +135,8 @@ export default function Home() {
                     </SimpleGrid>
                 </Container> */}
 
-                <FrontBanner />
-                <Features />
+            <FrontBanner />
+            <Features />
             {/* <Heading size='md'>Kenapa saudagar?</Heading>
             <Stack>
                 {intros.map((intro, i) => {
@@ -172,6 +173,7 @@ export default function Home() {
                     )
                 })}
 
+                <Html5QrScanner />
             </Stack>
             {/* <SocialMedia /> */}
 
