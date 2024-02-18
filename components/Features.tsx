@@ -6,10 +6,11 @@ import {
     Flex,
     Heading,
     Icon,
+    Image,
     Stack,
     Text,
 } from '@chakra-ui/react'
-import { ReactElement } from 'react'
+import { ReactElement, useEffect } from 'react'
 import {
     FcAssistant,
 } from 'react-icons/fc'
@@ -19,17 +20,20 @@ interface CardProps {
     description: string
     icon: ReactElement
     href: string
+    className : string
 }
 
-const Card = ({ heading, description, icon, href }: CardProps) => {
+const Card = ({ heading, description, icon, href, className }: CardProps) => {
     return (
         <Box
             // maxW={{ base: 'full', md: '275px' }}
+            className={className}
             w={'full'}
             borderRadius="xl"
             overflow="hidden"
             boxShadow={' 1px 1px 50px gray'}
-            p={5}>
+            p={5}
+            my={5}>
             <Stack align={'start'} spacing={2}>
                 <Flex
                     w={16}
@@ -40,7 +44,8 @@ const Card = ({ heading, description, icon, href }: CardProps) => {
                     rounded={'full'}
                     bg={'gray.100'}
                 >
-                    {icon}
+                    {/* {icon} */}
+                    <Image src={'https://storyset.com/illustration/investment-data/amico'} w={'50%'} />
                 </Flex>
                 <Box mt={2}>
                     <Heading size="md">{heading}</Heading>
@@ -74,6 +79,24 @@ const intros = [
 ];
 
 export default function Features() {
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                } else {
+                    entry.target.classList.remove('show');
+                }
+            })
+        })
+
+        const hiddenElements = document.querySelectorAll('.hidden');
+        hiddenElements.forEach((element) => {
+            observer.observe(element);
+        });
+    }, [])
+
     return (
         <Box p={4} mt={28}>
             <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
@@ -89,6 +112,7 @@ export default function Features() {
                 <Flex flexWrap="wrap" gridGap={6} justify="center">
                     {intros.map((intro, i) => (
                         <Card
+                            className={'hidden'}
                             key={i}
                             heading={intro.title}
                             icon={<Icon as={FcAssistant} w={10} h={10} />}

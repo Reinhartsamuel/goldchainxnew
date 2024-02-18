@@ -63,7 +63,6 @@ const contents = [
 
 
 export default function Home() {
-
     return (
         <>
             <Navbar />
@@ -103,7 +102,7 @@ export default function Home() {
                             </video>
                         </Box>
 
-                        <Text color={'gray.400'}>
+                        <Text color={'gray.400'} transition={'all 1s'}>
                             Cek keaslian emas dengan scan QR code di belakang kemasan:
                             "Scan, Verifikasi, Perdagangkan: Mengubah Kepemilikan Emas dengan Inovasi Blockchain – Emas Anda, Token Anda, Kendali Anda!
                         </Text>
