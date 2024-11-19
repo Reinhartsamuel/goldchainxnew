@@ -61,7 +61,7 @@ const HomeButtons = () => {
                     } else login(toast, router, setAccountAddress, setWalletAddress);
                 }}
             >
-                {wallet.isConnected() ? "Go to Profile " : "Login Wallet"}
+                {wallet.isConnected() ? "Profil Saya " : "Login Wallet"}
             </Button>
             <Button
                 borderColor={'#DABC07'}

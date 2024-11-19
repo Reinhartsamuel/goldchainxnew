@@ -18,12 +18,12 @@ import {
 interface CardProps {
     heading: string
     description: string
-    icon: ReactElement
     href: string
     className : string
+    image:string
 }
 
-const Card = ({ heading, description, icon, href, className }: CardProps) => {
+const Card = ({ heading, description, image, href, className }: CardProps) => {
     return (
         <Box
             // maxW={{ base: 'full', md: '275px' }}
@@ -43,9 +43,10 @@ const Card = ({ heading, description, icon, href, className }: CardProps) => {
                     color={'white'}
                     rounded={'full'}
                     bg={'gray.100'}
+                    overflow={'hidden'}
                 >
                     {/* {icon} */}
-                    <Image src={'https://storyset.com/illustration/investment-data/amico'} w={'50%'} />
+                    <Image src={image} w={'full'} objectFit={'cover'} />
                 </Flex>
                 <Box mt={2}>
                     <Heading size="md">{heading}</Heading>
@@ -53,9 +54,9 @@ const Card = ({ heading, description, icon, href, className }: CardProps) => {
                         {description}
                     </Text>
                 </Box>
-                <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
+                {/* <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
                     Learn more
-                </Button>
+                </Button> */}
             </Stack>
         </Box>
     )
@@ -66,15 +67,18 @@ const Card = ({ heading, description, icon, href, className }: CardProps) => {
 const intros = [
     {
         title: 'Kita Adalah Saudagar',
-        text: 'Setiap orang Indonesia, bisa jadi Saudagar! Emas hanya bisa memberikan keuntungan keuangan APABILA DIPERJUALBELIKAN. Dengan teknologi yang digunakannya, transaksi tidak lagi hanya terjadi antara Pusat dan Pembeli, Para Saudagar dapat saling melakukan transaksi dengan mudah dan aman. Menabung sambil mendapatkan keuntungan melalui jual beli emas'
+        text: 'Setiap orang Indonesia, bisa jadi Saudagar! Emas hanya bisa memberikan keuntungan keuangan APABILA DIPERJUALBELIKAN. Dengan teknologi yang digunakannya, transaksi tidak lagi hanya terjadi antara Pusat dan Pembeli, Para Saudagar dapat saling melakukan transaksi dengan mudah dan aman. Menabung sambil mendapatkan keuntungan melalui jual beli emas',
+        image: '/sell.svg'
     },
     {
         title: 'Pertama Di Indonesia!',
-        text: 'Emas Indonesia pertama yang menggunakan teknologi Blockchain. Teknologi yang memungkinkan Para Saudagar untuk saling bertransaksi dan memindahkan kepemilikannya secara langsung kepada siapapun yang dikehendaki oleh pemiliknya tanpa perlu melalui perantara dari pusat.'
+        text: 'Emas Indonesia pertama yang menggunakan teknologi Blockchain. Teknologi yang memungkinkan Para Saudagar untuk saling bertransaksi dan memindahkan kepemilikannya secara langsung kepada siapapun yang dikehendaki oleh pemiliknya tanpa perlu melalui perantara dari pusat.',
+        image: '/indonesia.svg'
     },
     {
         title: 'Keamanan Tinggi',
-        text: 'Keaslian dan Kepemilikan dari emas Saudagar melekat pada kemasan serta dilindungi dengan teknologi Blockchain yang membuat setiap keping emas Saudagar unik dan hanya ada 1 di Dunia.'
+        text: 'Keaslian dan Kepemilikan dari emas Saudagar melekat pada kemasan serta dilindungi dengan teknologi Blockchain yang membuat setiap keping emas Saudagar unik dan hanya ada 1 di Dunia.',
+        image: '/lock.svg'
     },
 ];
 
@@ -115,9 +119,9 @@ export default function Features() {
                             className={'hidden'}
                             key={i}
                             heading={intro.title}
-                            icon={<Icon as={FcAssistant} w={10} h={10} />}
                             description={intro.text}
                             href={'#'}
+                            image={intro.image}
                         />
                     ))}
                 </Flex>

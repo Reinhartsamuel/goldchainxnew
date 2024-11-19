@@ -76,7 +76,7 @@ export default function Home() {
                     <Stack flex={1} spacing={{ base: 5, md: 10 }}>
                         <Heading
                             lineHeight={1.2}
-                            fontWeight={600}
+                            fontWeight={'bold'}
                             fontSize={{ base: '2xl', sm: '3xl', lg: '4xl' }}
                             textAlign={'center'}
                         >
@@ -134,7 +134,7 @@ export default function Home() {
                     </SimpleGrid>
                 </Container> */}
 
-            <FrontBanner />
+            {/* <FrontBanner /> */}
             <Features />
             {/* <Heading size='md'>Kenapa saudagar?</Heading>
             <Stack>
@@ -172,9 +172,9 @@ export default function Home() {
                     )
                 })}
 
-                <Html5QrScanner />
+                {/* <Html5QrScanner /> */}
             </Stack>
-            {/* <SocialMedia /> */}
+            <SocialMedia />
 
             {/* </ComponentWrapper> */}
             {/* <Footer /> */}

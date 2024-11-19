@@ -145,7 +145,7 @@ export default function Navbar(): ReactElement {
                             >
                                 <Flex gap={2}>
                                     <Image src={'https://sequence.xyz/sequence-icon.svg'} width={20} height={20} alt={'sequence'} />
-                                    <Text fontWeight='bold' color='black'>{wallet.isConnected() ? "Go to Profile " : "Login"}</Text>
+                                    <Text fontWeight='bold' color='black'>{wallet.isConnected() ? "Profil Saya " : "Login"}</Text>
                                 </Flex>
                             </Button>
                         }
