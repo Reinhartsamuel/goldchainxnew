@@ -19,15 +19,13 @@ interface CardProps {
     heading: string
     description: string
     href: string
-    className : string
     image:string
 }
 
-const Card = ({ heading, description, image, href, className }: CardProps) => {
+const Card = ({ heading, description, image, href }: CardProps) => {
     return (
         <Box
             // maxW={{ base: 'full', md: '275px' }}
-            className={className}
             w={'full'}
             borderRadius="xl"
             overflow="hidden"
@@ -84,22 +82,6 @@ const intros = [
 
 export default function Features() {
 
-    useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                } else {
-                    entry.target.classList.remove('show');
-                }
-            })
-        })
-
-        const hiddenElements = document.querySelectorAll('.hidden');
-        hiddenElements.forEach((element) => {
-            observer.observe(element);
-        });
-    }, [])
 
     return (
         <Box p={4} mt={28}>
@@ -116,7 +98,7 @@ export default function Features() {
                 <Flex flexWrap="wrap" gridGap={6} justify="center">
                     {intros.map((intro, i) => (
                         <Card
-                            className={'hidden'}
+                            // className={'hidden'}
                             key={i}
                             heading={intro.title}
                             description={intro.text}
