@@ -6,7 +6,7 @@ import Error from "next/error";
 // This assumes your dapp runs on Ethereum mainnet
 const wallet = sequence.initWallet({
     defaultNetwork: 'mainnet',
-    projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
+    projectAccessKey: process.env.NEXT_PUBLIC_PROJECT_ACCESS_KEY,
 });
 
 // If your dapp runs on a different EVM-compatible blockchain, you can specify its name
@@ -16,7 +16,7 @@ export const connectToSequence = async () => {
         const connectDetails = await wallet.connect({
             app: "GoldChainX",
             authorize: true,
-            projectAccessKey: 'Q0ZfFkTedUvuQepZttdzEp3BAAAAAAAAA',
+            projectAccessKey: process.env.NEXT_PUBLIC_PROJECT_ACCESS_KEY,
             // And pass settings if you would like to customize further
             settings: {
                 theme: "dark",
